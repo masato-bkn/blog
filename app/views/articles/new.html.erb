@@ -1,0 +1,19 @@
+<h1>投稿</h1>
+
+<%= form_with(model: @article, url: articles_path) do |f| %>
+
+<div>
+    <%= f.label :title%>
+    <%= f.text_field :title%>
+</div>
+
+<div>
+    <%= f.label :content%>
+    <%= f.text_field :content%>
+</div>
+
+<div class="btn">
+    <%= f.submit "Submit" %>
+</div>
+
+<% end %>
