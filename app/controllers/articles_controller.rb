@@ -1,5 +1,8 @@
 class ArticlesController < ApplicationController
     def create
+        p params
+        p "ssss"
+
         @article = current_user.articles.new(
             title: params[:article][:title],
             content: params[:article][:content]
