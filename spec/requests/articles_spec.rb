@@ -134,5 +134,9 @@ RSpec.describe ArticlesController, type: :request do
         end
       end
     end
+
+    context 'ログインしてない場合' do
+      it_behaves_like 'ログインページにリダイレクトされる事'
+    end
   end
 end
