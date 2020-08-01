@@ -1,5 +1,6 @@
 class ArticlesController < ApplicationController
   before_action :sigin_in?, only: [:create, :new, :delete]
+
   def index
     @articles = Article.all
   end
