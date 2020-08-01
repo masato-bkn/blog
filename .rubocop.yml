@@ -68,3 +68,5 @@ Metrics/BlockLength:
     - 'spec/**/*'
 Style/SymbolArray:
   Enabled: false
+Lint/AssignmentInCondition:
+  Enabled: false

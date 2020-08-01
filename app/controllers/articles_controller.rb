@@ -23,9 +23,9 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    article = Article.find_by(id: params[:id])
-    article.destroy! if article.user_id == current_user.id
-
+    if article = Article.find_by(id: params[:id])
+      article.destroy! if article.user_id == current_user.id
+    end
     redirect_to articles_path
   end
 

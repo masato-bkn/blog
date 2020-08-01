@@ -92,4 +92,47 @@ RSpec.describe ArticlesController, type: :request do
       end
     end
   end
+  describe 'DELETE /articles/:id' do
+    subject do
+      delete article_path(id: id)
+    end
+
+    let :id do
+      1
+    end
+
+    let :user1 do
+      create(:user1)
+    end
+
+    context 'ログインしている場合' do
+      before :each do
+        sign_in user1
+      end
+
+      after :each do
+        sign_out user1
+      end
+
+      context '記事が存在する場合' do
+        let :article1 do
+          create(:article1)
+        end
+
+        it '削除されている事' do
+          expect(Article.find_by(id: id)).to eq(nil)
+        end
+      end
+
+      context '記事が存在しない場合' do
+        let :article1 do
+          nil
+        end
+
+        it '記事の一覧画面にリダイレクトされる事' do
+          expect(subject).to redirect_to(articles_path)
+        end
+      end
+    end
+  end
 end
