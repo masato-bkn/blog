@@ -1,5 +1,10 @@
 class ArticlesController < ApplicationController
-  before_action :sigin_in?, only: [:create, :new]
+  before_action :sigin_in?, only: [:create, :new, :destroy]
+
+  def index
+    @articles = Article.all
+  end
+
   def create
     @article = current_user.articles.new(create_param)
 
@@ -16,6 +21,13 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find_by(id: params[:id])
+  end
+
+  def destroy
+    if article = Article.find_by(id: params[:id])
+      article.destroy! if article.user_id == current_user.id
+    end
+    redirect_to articles_path
   end
 
   private
