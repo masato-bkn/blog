@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :sigin_in?, only: [:create]
+  before_action :sigin_in?, only: [:create, :new]
   def create
     @article = current_user.articles.new(create_param)
 
@@ -21,8 +21,7 @@ class ArticlesController < ApplicationController
   private
 
   def sigin_in?
-    # TODO: ログインページにリダイレクト
-    render 'articles/new' unless user_signed_in?
+    redirect_to new_user_session_path unless user_signed_in?
   end
 
   def create_param
