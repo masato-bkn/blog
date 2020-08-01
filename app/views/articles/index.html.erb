@@ -1,0 +1,29 @@
+<p>記事一覧</p>
+
+<% @articles.each do |article| %>
+  <div>
+    <div>
+      <p>No</p>
+      <p><%= article.id%></p>
+    </div>
+
+    <div>
+      <p>title</p>
+      <p><%= article.title%></p>
+    </div>
+
+    <div>
+      <p>content</p>
+      <p><%= article.content%></p>
+    </div>
+
+    <div>
+      <p>date</p>
+      <p><%= article.created_at%></p>
+    </div>
+
+    <button class="btn">
+      <%=link_to 削除, article_path(article.id), method: :delete>
+    </button>
+  </div>
+<% end %>
