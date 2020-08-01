@@ -1,4 +1,5 @@
 class ArticlesController < ApplicationController
+  before_action :sigin_in?, only: [:create]
   def create
     @article = current_user.articles.new(
       title: params[:article][:title],
@@ -6,7 +7,7 @@ class ArticlesController < ApplicationController
     )
 
     if @article.save
-      redirect_to article_path(id: @article.id)
+      redirect_to article_url(id: @article.id)
     else
       render 'articles/new'
     end
@@ -18,5 +19,12 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find_by(id: params[:id])
+  end
+
+  private
+
+  def sigin_in?
+    # TODO: ログインページにリダイレクト
+    render 'articles/new' unless user_signed_in?
   end
 end
