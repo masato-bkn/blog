@@ -5,3 +5,10 @@
 
 <p>コンテンツ</p>
 <p><%= @article.content %></p>
+
+
+<% if user_signed_in? %> 
+  <button class="btn">
+    <%=link_to "削除", article_path(@article.id), method: :delete %>
+  </button>
+<% end %>
