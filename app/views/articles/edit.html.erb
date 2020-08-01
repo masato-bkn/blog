@@ -1,0 +1,14 @@
+<h1>編集</h1>
+
+<%= form_with(model: @article, local: true) do |f| %>
+  <div>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div>
+    <%= f.label :content %>
+    <%= f.text_field :content %>
+  </div>
+  <%= f.submit "更新", class: "btn" %>
+<% end %>
