@@ -1,10 +1,7 @@
 class ArticlesController < ApplicationController
   before_action :sigin_in?, only: [:create]
   def create
-    @article = current_user.articles.new(
-      title: params[:article][:title],
-      content: params[:article][:content]
-    )
+    @article = current_user.articles.new(create_param)
 
     if @article.save
       redirect_to article_url(id: @article.id)
@@ -26,5 +23,9 @@ class ArticlesController < ApplicationController
   def sigin_in?
     # TODO: ログインページにリダイレクト
     render 'articles/new' unless user_signed_in?
+  end
+
+  def create_param
+    params.require(:article).permit(:title, :content)
   end
 end
