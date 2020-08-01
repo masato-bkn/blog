@@ -1,6 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe ArticlesController, type: :request do
+  shared_examples 'ログインページにリダイレクトされる事' do
+    it { is_expected.to redirect_to(new_user_session_path) }
+  end
+
+  describe 'GET /articles' do
+    subject do
+      get new_article_path
+    end
+
+    context 'ログインしていない場合' do
+      let :user1 do
+        create(:user1)
+      end
+
+      it_behaves_like 'ログインページにリダイレクトされる事'
+    end
+  end
+
   describe 'POST /articles' do
     subject do
       post articles_path(params)
@@ -69,6 +87,8 @@ RSpec.describe ArticlesController, type: :request do
             subject
           end.to change(Article, :count).by(0)
         end
+
+        it_behaves_like 'ログインページにリダイレクトされる事'
       end
     end
   end
