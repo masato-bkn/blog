@@ -25,19 +25,18 @@ class ArticlesController < ApplicationController
 
   def edit
     if @article = Article.find_by(id: params[:id])
-        render 'edit'
+      render 'edit'
     else
-        redirect_to articles_path
+      redirect_to articles_path
     end
   end
 
   def update
-    if @article = Article.new(create_param)
-        if @article.update(create_param)
-          redirect_to @article 
-        else
-          render 'edit'
-        end
+    if @article = Article.find_by(id: create_param[:id])
+      if @article.update(create_param)
+        redirect_to @article 
+      end
+    else
     end
   end
 
