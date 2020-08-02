@@ -1,0 +1,18 @@
+.header {
+    &-title {
+        font-size: 20px;
+    }
+    &-icon {
+        border-radius: 3px;
+        margin-right: 5px;
+        width: 35px;
+        height: 35px;
+    }    
+    &-login-button,
+    &-signup-button,
+    &-logout-button
+    {
+        text-decoration:none;
+        color: white;
+    }
+}
