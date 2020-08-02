@@ -1,5 +1,6 @@
 class ArticlesController < ApplicationController
   before_action :sigin_in?, only: [:create, :new, :destroy, :edit, :update]
+  before_action :correct_user?, only: [:destroy, :edit, :update]
 
   def index
     @articles = Article.all
@@ -58,5 +59,10 @@ class ArticlesController < ApplicationController
 
   def create_param
     params.require(:article).permit(:id, :title, :content, :user_id)
+  end
+
+  def correct_user?
+    article = current_user.articles.find_by(id: params[:id])
+    redirect_to articles_path if article.nil?
   end
 end
