@@ -1,10 +1,20 @@
 <nav class="navbar navbar-light bg-dark">
   <a class="navbar-brand text-white" href="#">
-    <%= image_tag 'icon.png', width: "30", height: "30", class: "d-inline-block align-top"%>
-    <span>blog</span>
+    <%= image_tag 'icon.png', class: "d-inline-block header-icon"%>
+    <span class="header-title">  *Blog app</span>
   </a>  
   <div class="float-right">
-    <div class="btn btn-success">login</div>
-    <div class="btn btn-info">sign up</div>
+    <% if user_signed_in?%>
+      <div class="btn btn-info">
+        <%=link_to "ログアウト", destroy_user_session_path, method: :delete, class: "header-logout-button" %>
+      </div>
+    <% else %>
+      <div class="btn btn-success">
+       <%=link_to "ログイン", new_user_session_path, class: "header-login-button" %>
+      </div>
+      <div class="btn btn-info">
+        <%=link_to "新規登録", new_user_registration_path, class: "header-signup-button" %>
+      </div>
+    <% end %>
   </div>
 </nav>
