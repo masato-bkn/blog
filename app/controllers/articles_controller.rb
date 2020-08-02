@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :sigin_in?, only: [:create, :new, :destroy]
+  before_action :sigin_in?, only: [:create, :new, :destroy, :edit, :update]
 
   def index
     @articles = Article.all
@@ -11,7 +11,7 @@ class ArticlesController < ApplicationController
     if @article.save
       redirect_to article_url(id: @article.id)
     else
-      render 'articles/new'
+      render 'new'
     end
   end
 
@@ -21,6 +21,26 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find_by(id: params[:id])
+  end
+
+  def edit
+    if @article = Article.find_by(id: params[:id])
+      render 'edit'
+    else
+      redirect_to articles_path
+    end
+  end
+
+  def update
+    if @article = Article.find_by(id: create_param[:id])
+      if @article.update(create_param)
+        redirect_to @article
+      else
+        render 'edit'
+      end
+    else
+      render 'edit'
+    end
   end
 
   def destroy
@@ -37,6 +57,6 @@ class ArticlesController < ApplicationController
   end
 
   def create_param
-    params.require(:article).permit(:title, :content)
+    params.require(:article).permit(:id, :title, :content, :user_id)
   end
 end
