@@ -4,15 +4,12 @@ orbs:
   heroku: circleci/heroku@1.0.1
 
 workflows:
-  build_test_and_deploy:
+   test_and_deploy:
     jobs:
-      - build
-      - rubocop:
-          requires: 
-            - build
+      - test
       - deploy_prd:
           requires:
-            - build
+            - test
           filters:
             branches:
               only:
@@ -29,25 +26,25 @@ executors:
           BUNDLER_VERSION: 2.1.4
 
 jobs:
-  build:
+  test:
     executor: default
     steps:
       - checkout
       - run:
-          name: update bundler
+          name: install dependencies
           command: |
             gem update --system
             gem install bundler -v 2.1.4
             bundle update --bundler
-      - bundle-install
-  rubocop:
-    executor: default
-    steps:
-      # - preparate
+            bundle-install
       - run:
-          name: Rubocop
+          name: rubocop
           command: |
             bundle exec rubocop
+      - run: 
+          name: rspec
+          command: |
+            bundle exec rspec
   deploy_prd:
     executor: heroku/default
     parameters:
@@ -66,22 +63,22 @@ jobs:
           app-name: << parameters.app-name >>
       - steps: << parameters.post-deploy >>
   
-commands:
-  bundle-install:
-    steps:
-      - run: gem update --system
-      - run: gem install bundler -v 2.1.4
-      - run: bundle update --bundler
-      - ruby-orbs/bundle-install:
-          bundle_clean: true
-          bundle_extra_args: ''
-          bundle_gemfile: Gemfile
-          bundle_jobs: 4
-          bundle_path: vendor/bundle
-          bundle_retry: 3
-          cache_key_prefix: v1-bundle-dependencies
-          restore_bundled_with: true
-  preparate:
-    steps:
-      - checkout
-      - bundle-install
+# commands:
+#   bundle-install:
+#     steps:
+#       - run: gem update --system
+#       - run: gem install bundler -v 2.1.4
+#       - run: bundle update --bundler
+#       - ruby-orbs/bundle-install:
+#           bundle_clean: true
+#           bundle_extra_args: ''
+#           bundle_gemfile: Gemfile
+#           bundle_jobs: 4
+#           bundle_path: vendor/bundle
+#           bundle_retry: 3
+#           cache_key_prefix: v1-bundle-dependencies
+#           restore_bundled_with: true
+#   preparate:
+#     steps:
+#       - checkout
+#       - bundle-install
