@@ -70,5 +70,3 @@ Style/SymbolArray:
   Enabled: false
 Lint/AssignmentInCondition:
   Enabled: false
-Layout/EndAlignment:
-  Enabled: false
