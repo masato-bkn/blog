@@ -43,7 +43,7 @@ jobs:
   rubocop:
     executor: default
     steps:
-      - preparate
+      # - preparate
       - run:
           name: Rubocop
           command: |
