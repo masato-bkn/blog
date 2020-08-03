@@ -1,0 +1,87 @@
+version: 2.1
+orbs:
+  ruby-orbs: sue445/ruby-orbs@1.6.0
+  heroku: circleci/heroku@1.0.1
+
+workflows:
+  build_test_and_deploy:
+    jobs:
+      - build
+      - rubocop:
+          requires: 
+            - build
+      - deploy_prd:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - master
+
+executors:
+  default:
+    working_directory: ~/repo
+    docker:
+      - image: ruby:2.6.6
+        environment:
+          BUNDLE_PATH: vendor/bundle
+          RAILS_ENV: test
+          BUNDLER_VERSION: 2.1.4
+
+jobs:
+  build:
+    executor: default
+    steps:
+      - checkout
+      - run:
+          name: update bundler
+          command: |
+            gem update --system
+            gem install bundler -v 2.1.4
+            bundle update --bundler
+      - bundle-install
+  rubocop:
+    executor: default
+    steps:
+      - preparate
+      - run:
+          name: Rubocop
+          command: |
+            bundle exec rubocop
+  deploy_prd:
+    executor: heroku/default
+    parameters:
+      app-name: 
+        default: $HEROKU_APP_NAME_PRD
+        type: string
+      post-deploy:
+        default:
+          - run:
+              command: heroku run rails db:migrate --app $HEROKU_APP_NAME_PRD
+        type: steps
+    steps:
+      - checkout
+      - heroku/install
+      - heroku/deploy-via-git:
+          app-name: << parameters.app-name >>
+      - steps: << parameters.post-deploy >>
+  
+commands:
+  bundle-install:
+    steps:
+      - run: gem update --system
+      - run: gem install bundler -v 2.1.4
+      - run: bundle update --bundler
+      - ruby-orbs/bundle-install:
+          bundle_clean: true
+          bundle_extra_args: ''
+          bundle_gemfile: Gemfile
+          bundle_jobs: 4
+          bundle_path: vendor/bundle
+          bundle_retry: 3
+          cache_key_prefix: v1-bundle-dependencies
+          restore_bundled_with: true
+  preparate:
+    steps:
+      - checkout
+      - bundle-install
