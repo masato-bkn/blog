@@ -19,7 +19,7 @@ executors:
   default:
     working_directory: ~/repo
     docker:
-      - image: ruby:2.6.6
+      - image: ruby:2.6.6-buster
         environment:
           BUNDLE_PATH: vendor/bundle
           RAILS_ENV: test
