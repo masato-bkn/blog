@@ -41,7 +41,6 @@ jobs:
           name: rubocop
           command: |
             bundle exec rubocop
-      # 以下はRails6でWebpackerを使う場合は必須   
       - restore_cache:  
           keys:  
             - yarn-cache-v1-{{ checksum "yarn.lock" }}  
@@ -76,23 +75,3 @@ jobs:
       - heroku/deploy-via-git:
           app-name: << parameters.app-name >>
       - steps: << parameters.post-deploy >>
-  
-# commands:
-#   bundle-install:
-#     steps:
-#       - run: gem update --system
-#       - run: gem install bundler -v 2.1.4
-#       - run: bundle update --bundler
-#       - ruby-orbs/bundle-install:
-#           bundle_clean: true
-#           bundle_extra_args: ''
-#           bundle_gemfile: Gemfile
-#           bundle_jobs: 4
-#           bundle_path: vendor/bundle
-#           bundle_retry: 3
-#           cache_key_prefix: v1-bundle-dependencies
-#           restore_bundled_with: true
-#   preparate:
-#     steps:
-#       - checkout
-#       - bundle-install
