@@ -19,7 +19,7 @@ executors:
   default:
     working_directory: ~/repo
     docker:
-      - image: ruby:2.6.6-node-browsers
+      - image: circleci/ruby:2.6.6-node-browsers
         environment:
           BUNDLE_PATH: vendor/bundle
           RAILS_ENV: test
