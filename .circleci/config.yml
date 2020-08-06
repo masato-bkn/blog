@@ -41,6 +41,7 @@ jobs:
           name: rubocop
           command: |
             bundle exec rubocop
+      # 以下はRails6でWebpackerを使う場合は必須   
       - restore_cache:  
           keys:  
             - yarn-cache-v1-{{ checksum "yarn.lock" }}  
@@ -75,3 +76,4 @@ jobs:
       - heroku/deploy-via-git:
           app-name: << parameters.app-name >>
       - steps: << parameters.post-deploy >>
+  
