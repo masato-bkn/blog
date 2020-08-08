@@ -1,8 +1,6 @@
 class GoodsController < ApplicationController
   def create
-    @article = current_user.articles.find_by(id: params[:article_id])
-
-    if @article.present?
+    if @article = current_user.articles.find_by(id: params[:article_id])
       Good.create!(user_id: params[:user_id], article_id: params[:article_id])
       render 'articles/show'
     else
@@ -10,5 +8,13 @@ class GoodsController < ApplicationController
     end
   end
 
-  def destroy; end
+  def destroy
+    good = current_user.goods.find_by(id: params[:id])
+    if good && good&.article
+      @article = good.article
+      good.destroy!
+    else
+      redirect_to articles_path
+    end
+  end
 end

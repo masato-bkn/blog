@@ -48,4 +48,40 @@ RSpec.describe GoodsController, type: :request do
       end
     end
   end
+
+  describe 'DELETE /goods' do
+    subject do
+      delete good_path(id: id)
+    end
+
+    let :id do
+      1
+    end
+
+    context 'いいねが存在する場合' do
+      before :each do
+        sign_in create(:user1)
+        create(:article1)
+        create(:good1)
+      end
+
+      it 'いいねで削除できていること' do
+        expect do
+          subject
+        end.to change(Good, :count).by(-1)
+      end
+    end
+
+    context 'いいねが存在しない場合' do
+      before :each do
+        sign_in create(:user1)
+      end
+
+      it 'Goodが変化しないこと' do
+        expect do
+          subject
+        end.to change(Good, :count).by(0)
+      end
+    end
+  end
 end
