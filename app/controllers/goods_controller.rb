@@ -25,8 +25,4 @@ class GoodsController < ApplicationController
   def create_param
     params.permit(:user_id, :article_id)
   end
-
-  def sign_in?
-    redirect_to new_user_session_path unless user_signed_in?
-  end
 end
