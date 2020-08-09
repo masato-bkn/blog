@@ -29,6 +29,7 @@ RSpec.describe GoodsController, type: :request do
       create(:article1)
     end
 
+<<<<<<< HEAD
     context 'ログインしている場合' do
       before :each do
         sign_in user1
