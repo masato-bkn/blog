@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :sigin_in?, only: [:create, :new, :destroy, :edit, :update]
+  before_action :sign_in?, only: [:create, :new, :destroy, :edit, :update]
   before_action :correct_user?, only: [:destroy, :edit, :update]
 
   def index
@@ -52,10 +52,6 @@ class ArticlesController < ApplicationController
   end
 
   private
-
-  def sigin_in?
-    redirect_to new_user_session_path unless user_signed_in?
-  end
 
   def create_param
     params.require(:article).permit(:id, :title, :content, :user_id)

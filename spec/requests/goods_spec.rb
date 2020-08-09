@@ -29,22 +29,46 @@ RSpec.describe GoodsController, type: :request do
       create(:article1)
     end
 
-    context '記事が存在する場合' do
-      it 'いいねできていること' do
-        expect do
-          sign_in user1
-          article1
-          subject
-        end.to change(Good, :count).by(1)
+<<<<<<< HEAD
+    context 'ログインしている場合' do
+      before :each do
+        sign_in user1
+      end
+
+      after :each do
+        sign_out user1
+      end
+
+      context '記事が存在する場合' do
+        it 'いいねできていること' do
+          expect do
+            article1
+            subject
+          end.to change(Good, :count).by(1)
+        end
+      end
+
+      context '記事が存在しない場合' do
+        it 'いいねできないこと' do
+          expect do
+            subject
+          end.to change(Good, :count).by(0)
+        end
       end
     end
+    context 'ログインしていない場合' do
+      context '記事が存在する場合' do
+        it 'いいねできないこと' do
+          expect do
+            user1
+            article1
+            subject
+          end.to change(Good, :count).by(0)
+        end
 
-    context '記事が存在しない場合' do
-      it 'いいねできないこと' do
-        expect do
-          sign_in user1
-          subject
-        end.to change(Good, :count).by(0)
+        it 'ログインページにリダイレクトされること' do
+          expect(subject).to redirect_to new_user_session_path
+        end
       end
     end
   end
