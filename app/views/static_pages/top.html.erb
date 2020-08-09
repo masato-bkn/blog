@@ -8,6 +8,9 @@
     </div>
     <div class="card-body">
       <p class="card-text"><%= article.content%></p>
+      <% if article.goods.count > 0 %>
+        <%= article.goods.count%> いいね
+      <% end%>
     </div>
   </div>
 <% end %>
