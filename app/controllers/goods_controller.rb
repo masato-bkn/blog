@@ -4,7 +4,7 @@ class GoodsController < ApplicationController
   def create
     if @article = current_user.articles.find_by(id: params[:article_id])
       Good.create!(user_id: params[:user_id], article_id: params[:article_id])
-      render 'articles/show'
+      render 'static_pages/top'
     else
       redirect_to articles_path
     end

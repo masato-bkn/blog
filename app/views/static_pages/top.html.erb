@@ -8,9 +8,14 @@
     </div>
     <div class="card-body">
       <p class="card-text"><%= article.content%></p>
-      <% if article.goods.count > 0 %>
-        <%= article.goods.count%> いいね
+
+
+
+      <%= link_to goods_path(user_id: article.user.id, article_id: article.id), method: :post do%>
+        <i class="fas fa-thumbs-up"></i>
+        <%= article.goods.count if article.goods.count > 0 %>
       <% end%>
+
     </div>
   </div>
 <% end %>
