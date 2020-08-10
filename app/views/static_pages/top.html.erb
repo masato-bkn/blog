@@ -8,23 +8,20 @@
     </div>
     <div class="card-body">
       <p class="card-text"><%= article.content%></p>
-
       <% if do_thumb_up?(article.goods) %>
-
         <%= form_with(model: current_user.goods.find_by(article_id: article.id),
                       html: { method: :delete }, remote: true) do |f| %>
-          <%= f.submit class: "fas fa-thumbs-up" %>
+            <%= f.button :type => "submit", class: "ungood-btn" do %>
+              <i class="fas fa-thumbs-up fa-fw"></i>
+           <% end %>
         <% end %>
-        thumb-down
-
       <% else %>
-
         <%= form_with(model: current_user.goods.build, remote: true) do |f| %>
           <div><%= hidden_field_tag :article_id, article.id %></div>
-          <%= f.submit class: "fas fa-thumbs-up" %>
+          <%= f.button :type => "submit", class: "good-btn" do %>
+            <i class="far fa-thumbs-up fa-fw"></i>
+          <% end %>
         <% end %>
-        thumb-up
-
       <% end %>
     </div>
   </div>
