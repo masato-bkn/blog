@@ -1,0 +1,14 @@
+<p class="h2 text-dark page-title">記事一覧</p>
+
+<% @articles.each do |article| %>
+  <div class="card card-article">
+    <div class="card-header card-article-header">
+      No <%= article.id%>
+      <%=link_to article.title,article_path(id: article.id), class: "card-article-title"  %>
+    </div>
+    <div class="card-body">
+      <p class="card-text"><%= article.content%></p>
+      <%= render 'articles/good_form', {article: article} %>
+    </div>
+  </div>
+<% end %>

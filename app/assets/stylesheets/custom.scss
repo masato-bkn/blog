@@ -1,3 +1,7 @@
+.page-title {
+  margin-top: 40px;
+}
+
 .header {
     &-title {
         font-size: 20px;
@@ -15,4 +19,25 @@
         text-decoration:none;
         color: white;
     }
+}
+
+.card {
+  &-article {
+    margin: 50px 0px;
+    &-title {
+      text-decoration:none;
+      color: black;
+    }
+  }
+}
+
+.good-btn {
+  border-style: none;
+  background-color: white;
+}
+
+.ungood-btn {
+  border-style: none;
+  background-color: white;
+  color: #fecb81;
 }
