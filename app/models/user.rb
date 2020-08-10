@@ -6,4 +6,12 @@ class User < ApplicationRecord
 
   has_many :articles
   has_many :goods
+
+  def do_thumb_up(article_id)
+    goods.create(article_id: article_id)
+  end
+
+  def do_thumb_down(id)
+    goods.find_by(id: id).destroy
+  end
 end

@@ -9,13 +9,23 @@
     <div class="card-body">
       <p class="card-text"><%= article.content%></p>
 
+      <% if do_thumb_up?(article.goods) %>
 
+        <%= form_with(model: current_user.goods.find_by(article_id: article.id),
+                      html: { method: :delete }, remote: true) do |f| %>
+          <%= f.submit class: "fas fa-thumbs-up" %>
+        <% end %>
+        thumb-down
 
-      <%= link_to goods_path(user_id: article.user.id, article_id: article.id), method: :post do%>
-        <i class="fas fa-thumbs-up"></i>
-        <%= article.goods.count if article.goods.count > 0 %>
-      <% end%>
+      <% else %>
 
+        <%= form_with(model: current_user.goods.build, remote: true) do |f| %>
+          <div><%= hidden_field_tag :article_id, article.id %></div>
+          <%= f.submit class: "fas fa-thumbs-up" %>
+        <% end %>
+        thumb-up
+
+      <% end %>
     </div>
   </div>
 <% end %>
