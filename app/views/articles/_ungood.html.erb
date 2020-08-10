@@ -1,0 +1,6 @@
+<%= form_with(model: current_user.goods.find_by(article_id: article_id),
+              html: { method: :delete }, remote: true) do |f| %>
+  <%= f.button :type => "submit", class: "ungood-btn" do %>
+    <i class="fas fa-thumbs-up fa-fw"></i>
+  <% end %>
+<% end %>
