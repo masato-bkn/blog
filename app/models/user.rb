@@ -12,6 +12,6 @@ class User < ApplicationRecord
   end
 
   def do_thumb_down(id)
-    goods.find_by(id: id).destroy
+    goods.find_by(id: id)&.destroy
   end
 end
