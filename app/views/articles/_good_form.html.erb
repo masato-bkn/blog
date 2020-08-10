@@ -1,5 +1,5 @@
 <% if do_thumb_up?(article.goods) %>
-  <%= render 'articles/ungood', {article_id: article.id} %>
+  <%= render 'articles/ungood', {article: article} %>
 <% else %>
-  <%= render 'articles/good', {article_id: article.id} %>
+  <%= render 'articles/good', {article: article} %>
 <% end %>
