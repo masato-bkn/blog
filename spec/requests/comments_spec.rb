@@ -8,8 +8,10 @@ RSpec.describe CommentsController, type: :request do
 
     let :params do
       {
-        text: text,
-        article_id: article_id
+        comment: {
+          text: text,
+          article_id: article_id
+        }
       }
     end
 
@@ -21,13 +23,52 @@ RSpec.describe CommentsController, type: :request do
       1
     end
 
-    before :each do
+    let :user1 do
       create(:user1)
-      create(:article1)
     end
 
-    it 'コメントが投稿できていること' do
-      expect { subject }.to change(Comment, :count).by(1)
+    context 'ログインしている場合' do
+      before :each do
+        sign_in user1
+        create(:article1)
+      end
+
+      after :each do
+        sign_out user1
+      end
+
+      it 'コメントが投稿できていること' do
+        expect { subject }.to change(Comment, :count).by(1)
+      end
+    end
+
+    context 'ログインしていない場合' do
+      before :each do
+        user1
+        create(:article1)
+      end
+
+      it 'コメントが投稿できていること' do
+        expect { subject }.to change(Comment, :count).by(0)
+      end
+    end
+
+    context 'パラメータが不正な場合' do
+      where(:scenario, :answer, :text, :article_id) do
+        [
+          ['textが空の場合', 'Commentが変化しないこと', '', 1],
+          ['textが151文字の場合', 'Commentが変化しないこと', 'a' * 151, 1],
+          ['記事が存在しない場合', 'Commentが変化しないこと', text, 999]
+        ]
+      end
+
+      with_them do
+        context :scenario do
+          it :answer do
+            expect { subject }.to change(Comment, :count).by(0)
+          end
+        end
+      end
     end
   end
 end
