@@ -5,6 +5,10 @@ class CommentsController < ApplicationController
     Comment.create!(create_params)
   end
 
+  def destroy
+    Comment.find_by(params[:id]).destroy!
+  end
+
   private
 
   def create_params

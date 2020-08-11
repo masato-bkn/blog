@@ -71,4 +71,33 @@ RSpec.describe CommentsController, type: :request do
       end
     end
   end
+  describe 'DELETE /comment/:id' do
+    subject do
+      delete comment_path(id: id)
+    end
+
+    let :user1 do
+      create(:user1)
+    end
+
+    let :id do
+      1
+    end
+
+    context 'ログインしている場合' do
+      before :each do
+        sign_in user1
+        create(:article1)
+        create(:comment1)
+      end
+
+      after :each do
+        sign_out user1
+      end
+
+      it 'コメントが削除できていること' do
+        expect { subject }.to change { Comment.find_by(id: id).present? }.from(be_truthy).to(be_falsey)
+      end
+    end
+  end
 end
