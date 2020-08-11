@@ -98,6 +98,33 @@ RSpec.describe CommentsController, type: :request do
       it 'コメントが削除できていること' do
         expect { subject }.to change { Comment.find_by(id: id).present? }.from(be_truthy).to(be_falsey)
       end
+
+      context 'コメントが存在しない場合' do
+        before :each do
+          sign_in user1
+          create(:article1)
+
+          after :each do
+            sign_out user1
+          end
+
+          it 'コメントが変化しないこと' do
+            expect { subject }.to change(Comment, :count).by(0)
+          end
+        end
+      end
+    end
+
+    context 'ログインしていない場合' do
+      before :each do
+        user1
+        create(:article1)
+        create(:comment1)
+      end
+
+      it 'コメントが変化しないこと' do
+        expect { subject }.to change(Comment, :count).by(0)
+      end
     end
   end
 end

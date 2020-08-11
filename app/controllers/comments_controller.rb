@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :sign_in?, only: [:create]
+  before_action :sign_in?, only: [:create, :destroy]
 
   def create
     Comment.create!(create_params)
