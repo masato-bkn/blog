@@ -1,14 +1,25 @@
 <h1>詳細ページ</h1>
 
-<p>タイトル</p>
-<p><%= @article.title %></p>
+<div class="card card-article">
+  <div class="card-header card-article-header">
+    <p>No <%= @article.id%> <%= @article.title%></p>
+  </div>
+  <div class="card-body">
+    <p class="card-text"><%= @article.content%></p>
+    <%= render 'articles/good_form', {article: @article} %>
+  </div>
+  <% if user_signed_in? %>
+    <button class="btn">
+      <%=link_to "削除", article_path(@article.id), method: :delete %>
+    </button>
+  <% end %>
+</div>
 
-<p>コンテンツ</p>
-<p><%= @article.content %></p>
-
-
-<% if user_signed_in? %> 
-  <button class="btn">
-    <%=link_to "削除", article_path(@article.id), method: :delete %>
-  </button>
+<%= form_with(model: @comment, url: comments_path,) do |f|%>
+  <div class="form-group">
+    <label for="comment_post_form">コメント投稿</label>
+    <%= f.text_area :text, class:"form-control", size: "1x5"%>
+  </div>
+  <%= f.hidden_field :article_id, value: @article.id %>
+  <%= f.submit '送信', class:"btn btn-primary"%>
 <% end %>
