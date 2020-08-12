@@ -8,8 +8,8 @@ RSpec.describe CommentsController, type: :request do
 
     let :params do
       {
-          text: text,
-          article_id: article_id
+        text: text,
+        article_id: article_id
       }
     end
 
