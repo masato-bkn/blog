@@ -1,4 +1,4 @@
-<%= form_with(model: @good, remote: true) do |f| %>
+<%= form_with(model: article.goods.build, remote: true) do |f| %>
   <div><%= hidden_field_tag :article_id, article.id %></div>
   <%= f.button :type => "submit", class: "good-btn" do %>
     <i class="far fa-thumbs-up fa-fw"></i>
