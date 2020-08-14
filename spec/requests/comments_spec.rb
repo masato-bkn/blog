@@ -8,9 +8,11 @@ RSpec.describe CommentsController, type: :request do
 
     let :params do
       {
-        text: text,
-        article_id: article_id,
-        user_id: user_id
+        comment: {
+          text: text,
+          article_id: article_id,
+          user_id: user_id
+        }
       }
     end
 
