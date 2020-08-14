@@ -15,11 +15,24 @@
   <% end %>
 </div>
 
-<%= form_with(model: @comment, url: comments_path,) do |f|%>
+<h3>コメント</h3>
+<% @article.comments.each do |comment| %>
+  <div class="card">
+    <div class="card-header">
+      <%= comment.user.name %>
+    </div>
+    <div class="card-body">
+      <p class="card-text"><%= comment.text%></p>
+    </div>
+  </div>
+<% end %>
+
+<%= form_with(model: @article.comments, url: comments_path,) do |f|%>
   <div class="form-group">
     <label for="comment_post_form">コメント投稿</label>
     <%= f.text_area :text, class:"form-control", size: "1x5"%>
   </div>
   <%= f.hidden_field :article_id, value: @article.id %>
+  <%= f.hidden_field :user_id, value: @article.user_id %>
   <%= f.submit '送信', class:"btn btn-primary"%>
 <% end %>
