@@ -6,13 +6,18 @@
   </div>
   <div class="card-body">
     <p class="card-text"><%= @article.content%></p>
-    <%= render 'articles/good_form', {article: @article} %>
+    <p class="text-right"><%= format_time(@article.created_at) %></p>
+    <%= render 'articles/good_form', {article: @article} %>  
+    <% if user_signed_in? %>
+      <div class="float-right delete-section">
+        <%= form_with(model: @article, remote: true, method: :delete) do |f| %>
+          <%= f.button :type => "submit", class: "trash-button" do %>
+            <i class="fas fa-trash"></i>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
-  <% if user_signed_in? %>
-    <button class="btn">
-      <%=link_to "削除", article_path(@article.id), method: :delete %>
-    </button>
-  <% end %>
 </div>
 
 <div class="comment-area">
@@ -26,18 +31,30 @@
       <div class="card-body">
         <p class="card-text"><%= comment.text%></p>
         <p class="text-right"><%= format_time(comment.created_at) %></p>
+
+        <% if user_signed_in? %>
+          <div class="float-right delete-section">
+            <%= form_with(model: comment, remote: true, method: :delete) do |f| %>
+              <%= f.button :type => "submit", class: "trash-button" do %>
+                <i class="fas fa-trash"></i>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
   <% end %>
 </div>
 
-<%= form_with(model: @article.comments, url: comments_path,) do |f|%>
-  <div class="form-group">
-    <h3 for="comment_post_form">コメント投稿</h3>
-    <%= f.text_area :text, class:"form-control", size: "1x5"%>
-  </div>
-  <%= f.hidden_field :article_id, value: @article.id %>
-  <%= f.hidden_field :user_id, value: @article.user_id %>
-  <%= f.submit '送信', class:"btn btn-primary"%>
-<% end %>
+<div class="comment-form">
+  <%= form_with(model: @article.comments, url: comments_path,) do |f|%>
+    <div class="form-group">
+      <h3 for="comment_post_form">コメント投稿</h3>
+      <%= f.text_area :text, class:"form-control", size: "1x5"%>
+    </div>
+    <%= f.hidden_field :article_id, value: @article.id %>
+    <%= f.hidden_field :user_id, value: @article.user_id %>
+    <%= f.submit '送信', class:"btn btn-primary"%>
+  <% end %>
+</div>

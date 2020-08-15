@@ -28,7 +28,14 @@
       text-decoration:none;
       color: black;
     }
+    .delete-section {
+      width: 30px
+    }
   }
+}
+
+.article-delete-button {
+  width: 30px;
 }
 
 .comment {
@@ -36,7 +43,13 @@
     padding: 30px 0px 60px 0px;
     .element {
       padding: 20px 0px 20px 0px;
+      .delete-section {
+        width: 30px
+      }
     }
+  }
+  &-form {
+    padding-bottom: 30px; 
   }
 }
 
@@ -49,4 +62,9 @@
   border-style: none;
   background-color: white;
   color: #fecb81;
+}
+
+.trash-button {
+  border-style: none;
+  background-color: white;
 }
