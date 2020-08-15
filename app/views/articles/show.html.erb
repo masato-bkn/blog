@@ -15,17 +15,20 @@
   <% end %>
 </div>
 
-<h3>コメント</h3>
-<% @article.comments.each do |comment| %>
-  <div class="card">
-    <div class="card-header">
-      <%= comment.user.name %>
+<div class="comment-area">
+  <h3>コメント</h3>
+  <% @article.comments.each do |comment| %>
+    <div class="card">
+      <div class="card-header">
+        <%= comment.user.name %>
+      </div>
+      <div class="card-body">
+        <p class="card-text"><%= comment.text%></p>
+        <p class="text-right"><%= format_time(comment.created_at) %></p>
+      </div>
     </div>
-    <div class="card-body">
-      <p class="card-text"><%= comment.text%></p>
-    </div>
-  </div>
-<% end %>
+  <% end %>
+</div>
 
 <%= form_with(model: @article.comments, url: comments_path,) do |f|%>
   <div class="form-group">
