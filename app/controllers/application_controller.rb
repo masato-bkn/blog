@@ -14,9 +14,10 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
   def storable_location?
     # TODO: get意外の時も保存しているが、この作りはどうなんだろう??
-    is_navigational_format? && !devise_controller? && !request.xhr? 
+    is_navigational_format? && !devise_controller? && !request.xhr?
   end
 
   def store_user_location!
