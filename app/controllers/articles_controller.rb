@@ -23,7 +23,6 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find_by(id: params[:id])
-    @good = Good.new
   end
 
   def edit
@@ -48,7 +47,7 @@ class ArticlesController < ApplicationController
 
   def destroy
     if article = Article.find_by(id: params[:id])
-      article.destroy! if article.user_id == current_user.id
+      article.destroy!
     end
     redirect_to articles_path
   end
