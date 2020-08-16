@@ -113,7 +113,7 @@ RSpec.describe CommentsController, type: :request do
           sign_in user2
         end
         it 'コメントを削除できないこと' do
-          expect { subject }.not_to changeComment.find_by(id: id).present?
+          expect { subject }.not_to change { Comment.find_by(id: id).present? }
         end
       end
 
