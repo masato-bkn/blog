@@ -15,6 +15,6 @@ class GoodsController < ApplicationController
   private
 
   def create_param
-    params.permit(:commit, :authenticity_token, :article_id).required(:article_id)
+    params.required(:article_id)
   end
 end
