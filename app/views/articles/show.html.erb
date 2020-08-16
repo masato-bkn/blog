@@ -8,7 +8,7 @@
     <p class="card-text"><%= @article.content%></p>
     <p class="text-right"><%= format_time(@article.created_at) %></p>
     <%= render 'articles/good_form', {article: @article} %>  
-    <% if user_signed_in? %>
+    <% if user_signed_in? && current_user_article? %>
       <div class="float-right delete-section">
         <%= form_with(model: @article, remote: true, method: :delete) do |f| %>
           <%= f.button :type => "submit", class: "trash-button" do %>

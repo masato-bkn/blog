@@ -59,7 +59,6 @@ class ArticlesController < ApplicationController
   end
 
   def correct_user?
-    article = current_user.articles.find_by(id: params[:id])
-    redirect_to articles_path if article.nil?
+    redirect_to articles_path unless current_user_article?
   end
 end
