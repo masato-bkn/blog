@@ -33,7 +33,7 @@
             <p class="card-text"><%= comment.text%></p>
             <p class="text-right"><%= format_time(comment.created_at) %></p>
 
-            <% if user_signed_in?%>
+            <% if user_signed_in? && current_user_comment?(comment.id) %>
               <div class="float-right delete-section">
                 <%= form_with(model: comment, remote: true, method: :delete) do |f| %>
                   <%= f.button :type => "submit", class: "trash-button" do %>
@@ -42,6 +42,7 @@
                 <% end %>
               </div>
             <% end %>
+
           </div>
         </div>
       </div>
