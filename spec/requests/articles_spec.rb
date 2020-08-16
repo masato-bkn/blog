@@ -115,6 +115,14 @@ RSpec.describe ArticlesController, type: :request do
       create(:user1)
     end
 
+    let :user2 do
+      create(:user2)
+    end
+
+    let :article1 do
+      create(:article1)
+    end
+
     context 'ログインしている場合' do
       before :each do
         sign_in user1
@@ -125,17 +133,23 @@ RSpec.describe ArticlesController, type: :request do
       end
 
       context '記事が存在する場合' do
-        let :id do
-          article1.id
-        end
-
-        let :article1 do
-          create(:article1)
-        end
-
         it '削除されている事' do
           article1
           expect { subject }.to change(Article, :count).by(-1)
+        end
+      end
+
+      context '自分の記事ではない場合' do
+        before :each do
+          sign_in user2
+        end
+
+        before :each do
+          sign_out user2
+        end
+
+        it '記事を削除できないこと' do
+          expect { subject }.to change(Article, :count).by(0)
         end
       end
 
