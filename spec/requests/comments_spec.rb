@@ -85,6 +85,10 @@ RSpec.describe CommentsController, type: :request do
       create(:user1)
     end
 
+    let :user2 do
+      create(:user2)
+    end
+
     let :id do
       1
     end
@@ -102,6 +106,15 @@ RSpec.describe CommentsController, type: :request do
 
       it 'コメントが削除できていること' do
         expect { subject }.to change { Comment.find_by(id: id).present? }.from(be_truthy).to(be_falsey)
+      end
+
+      context 'ログインユーザのコメントではない場合' do
+        before :each do
+          sign_in user2
+        end
+        it 'コメントを削除できないこと' do
+          expect { subject }.not_to changeComment.find_by(id: id).present?
+        end
       end
 
       context 'コメントが存在しない場合' do
