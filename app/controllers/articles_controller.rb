@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
   before_action :sign_in?, only: [:create, :new, :destroy, :edit, :update]
-  before_action :correct_user?, only: [:destroy, :edit, :update]
+  before_action :correct_article?, only: [:destroy, :edit, :update]
 
   def index
     @articles = Article.all
@@ -58,7 +58,7 @@ class ArticlesController < ApplicationController
     params.require(:article).permit(:id, :title, :content, :user_id)
   end
 
-  def correct_user?
-    redirect_to articles_path unless current_user_article?
+  def correct_article?
+    redirect_to articles_path unless current_user_article?(params[:id])
   end
 end
