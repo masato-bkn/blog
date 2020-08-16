@@ -20,32 +20,34 @@
   </div>
 </div>
 
-<div class="comment-area">
-  <h3>コメント</h3>
-  <% @article.comments.each do |comment| %>
-  <div class="element">
-    <div class="card">
-      <div class="card-header">
-        <%= comment.user.name %>
-      </div>
-      <div class="card-body">
-        <p class="card-text"><%= comment.text%></p>
-        <p class="text-right"><%= format_time(comment.created_at) %></p>
+<% if @article.comments.present? %>
+  <div class="comment-area">
+    <h3>コメント</h3>
+    <% @article.comments.each do |comment| %>
+      <div class="element">
+        <div class="card">
+          <div class="card-header">
+            <%= comment.user.name %>
+          </div>
+          <div class="card-body">
+            <p class="card-text"><%= comment.text%></p>
+            <p class="text-right"><%= format_time(comment.created_at) %></p>
 
-        <% if user_signed_in? %>
-          <div class="float-right delete-section">
-            <%= form_with(model: comment, remote: true, method: :delete) do |f| %>
-              <%= f.button :type => "submit", class: "trash-button" do %>
-                <i class="fas fa-trash"></i>
-              <% end %>
+            <% if user_signed_in?%>
+              <div class="float-right delete-section">
+                <%= form_with(model: comment, remote: true, method: :delete) do |f| %>
+                  <%= f.button :type => "submit", class: "trash-button" do %>
+                    <i class="fas fa-trash"></i>
+                  <% end %>
+                <% end %>
+              </div>
             <% end %>
           </div>
-        <% end %>
+        </div>
       </div>
-    </div>
+    <% end %>
   </div>
-  <% end %>
-</div>
+<% end %>
 
 <div class="comment-form">
   <%= form_with(model: @article.comments, url: comments_path,) do |f|%>
