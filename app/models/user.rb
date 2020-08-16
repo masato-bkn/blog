@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   has_many :articles
   has_many :goods
+  has_many :comments
 
   def do_thumb_up(article_id)
     goods.create(article_id: article_id)
