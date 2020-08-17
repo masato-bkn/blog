@@ -4,4 +4,8 @@ module CommentHelper
 
     false
   end
+
+  def fetch_current_user_comments
+    current_user.comments.map(&:id)
+  end
 end
