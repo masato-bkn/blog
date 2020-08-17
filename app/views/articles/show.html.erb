@@ -20,10 +20,12 @@
   </div>
 </div>
 
+<% ids = fetch_current_user_comments %>
+
 <% if @article.comments.present? %>
   <div class="comment-area">
     <h3>コメント</h3>
-    <% @article.comments.each do |comment| %>
+    <% @article.comments.includes(:user).each do |comment| %>
       <div class="element">
         <div class="card">
           <div class="card-header">
@@ -33,7 +35,7 @@
             <p class="card-text"><%= comment.text%></p>
             <p class="text-right"><%= format_time(comment.created_at) %></p>
 
-            <% if user_signed_in? && current_user_comment?(comment.id) %>
+            <% if user_signed_in? && ids.include?(comment.id) %>
               <div class="float-right delete-section">
                 <%= form_with(model: comment, remote: true, method: :delete) do |f| %>
                   <%= f.button :type => "submit", class: "trash-button" do %>
