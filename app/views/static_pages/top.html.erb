@@ -1,6 +1,6 @@
 <p class="h2 text-dark page-title">記事一覧</p>
 
-<% @articles.each do |article| %>
+<% @articles.includes(:goods).each do |article| %>
   <div class="card card-article">
     <div class="card-header card-article-header">
       No <%= article.id%>

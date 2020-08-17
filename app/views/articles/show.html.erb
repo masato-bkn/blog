@@ -20,13 +20,12 @@
   </div>
 </div>
 
-
-<%= ids = fetch_current_user_comments %>
+<% ids = fetch_current_user_comments %>
 
 <% if @article.comments.present? %>
   <div class="comment-area">
     <h3>コメント</h3>
-    <% @article.comments.each do |comment| %>
+    <% @article.comments.includes(:user).each do |comment| %>
       <div class="element">
         <div class="card">
           <div class="card-header">
