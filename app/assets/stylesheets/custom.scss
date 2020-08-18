@@ -11,13 +11,16 @@
         margin-right: 5px;
         width: 35px;
         height: 35px;
-    }    
+    }
     &-login-button,
     &-signup-button,
     &-logout-button
     {
         text-decoration:none;
         color: white;
+    }
+    .user-name {
+      margin-right: 30px;
     }
 }
 
@@ -28,10 +31,17 @@
       text-decoration:none;
       color: black;
     }
+    .user-name {
+      float: right
+    }
     .delete-section {
       width: 30px
     }
   }
+}
+
+.good-form {
+  float: left
 }
 
 .article-delete-button {
