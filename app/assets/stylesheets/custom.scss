@@ -28,10 +28,17 @@
       text-decoration:none;
       color: black;
     }
+    .user-name {
+      float: right
+    }
     .delete-section {
       width: 30px
     }
   }
+}
+
+.good-form {
+  float: left
 }
 
 .article-delete-button {
