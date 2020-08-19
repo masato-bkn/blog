@@ -23,6 +23,7 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find_by(id: params[:id])
+    @ids = fetch_current_user_comment_ids
   end
 
   def edit
@@ -60,5 +61,9 @@ class ArticlesController < ApplicationController
 
   def correct_article?
     redirect_to articles_path unless current_user_article?(params[:id])
+  end
+
+  def fetch_current_user_comment_ids
+    current_user&.comments&.map(&:id)
   end
 end

@@ -6,6 +6,7 @@ class CommentsController < ApplicationController
     @article = Article.find_by(id: create_params[:article_id])
     @comments = @article.comments
     @comments.create(create_params)
+    @ids = fetch_current_user_comment_ids
     render 'articles/show'
   end
 
@@ -21,5 +22,9 @@ class CommentsController < ApplicationController
 
   def correct_comment?
     redirect_to articles_path unless current_user_comment?(params[:id])
+  end
+
+  def fetch_current_user_comment_ids
+    current_user&.comments&.map(&:id)
   end
 end
