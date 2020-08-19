@@ -25,4 +25,11 @@ class ApplicationController < ActionController::Base
   def store_user_location!
     store_location_for(:user, request.fullpath)
   end
+
+  def fetch_current_user_comment_ids
+    return [] if current_user.nil?
+
+    ids = current_user.articles.find_by(id: params[:article_id])&.comments&.map(&:id)
+    ids.present? ? ids : []
+  end
 end
