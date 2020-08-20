@@ -7,7 +7,13 @@
           プロフィール
         </div>
         <div class="card-body">
-          <%= image_tag("icon.png") %>
+          <div class="user_image">
+            <% if @user.picture? %>
+              <%= image_tag("icon.png") %>
+            <% else %>
+              <%= image_tag("default.png",:size => '80x80') %>
+            <% end %>
+          </div>
           <p>ユーザー名: <%= @user.name%></p>
           <p>投稿数: <%= @user.articles.count %></p>
           <p>開始日: <%= format_time(@user.created_at) %></p>
