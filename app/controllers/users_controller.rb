@@ -11,8 +11,11 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    @user.update(user_param)
-    render 'show'
+    if @user.update(user_param)
+      render 'show'
+    else
+      render 'edit'
+    end
   end
 
   private
@@ -20,5 +23,4 @@ class UsersController < ApplicationController
   def user_param
     params.require(:user).permit(:id, :name, :picture)
   end
-
 end
