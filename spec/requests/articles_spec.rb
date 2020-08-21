@@ -137,6 +137,28 @@ RSpec.describe ArticlesController, type: :request do
           article1
           expect { subject }.to change(Article, :count).by(-1)
         end
+
+        context '記事に紐づくコメントが存在する場合' do
+          let :comment1 do
+            create(:comment1)
+          end
+          it 'コメントが削除されていること' do
+            article1
+            comment1
+            expect { subject }.to change(Comment, :count).by(-1)
+          end
+        end
+
+        context '記事に紐づくいいねが存在する場合' do
+          let :good1 do
+            create(:good1)
+          end
+          it 'いいね除されていること' do
+            article1
+            good1
+            expect { subject }.to change(Good, :count).by(-1)
+          end
+        end
       end
 
       context '自分の記事ではない場合' do
