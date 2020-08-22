@@ -17,6 +17,9 @@
           <p>ユーザー名: <%= @user.name%></p>
           <p>投稿数: <%= @user.articles.count %></p>
           <p>開始日: <%= format_time(@user.created_at) %></p>
+          <%= link_to edit_user_path(current_user.id) do %>
+            <div class="btn btn-success">編集</div>
+          <% end %>
         </div>
       </div>
     </div>
