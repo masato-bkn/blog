@@ -8,6 +8,7 @@
         </div>
         <div class="card-body">
           <%= form_with(model: @user, local: true) do |f| %>
+            <%= render 'shared/error_messages', object: f.object %>
             <div class="user_image">
               <% if @user.picture? %>
                 <%= image_tag @user.picture.url %>
