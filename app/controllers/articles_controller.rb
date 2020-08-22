@@ -8,7 +8,6 @@ class ArticlesController < ApplicationController
 
   def create
     @article = current_user.articles.new(article_param)
-
     if @article.save
       redirect_to article_url(id: @article.id)
     else

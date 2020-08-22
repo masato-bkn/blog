@@ -1,6 +1,16 @@
 <h1>投稿</h1>
 
-<%= form_with(model: @article, url: articles_path) do |f| %>
+<%= form_with(model: @article, url: articles_path, local: true) do |f| %>
+
+  <% if f.object.errors.any? %>
+    <div class="alert alert-danger error_explanation">
+      <ul>
+        <% f.object.errors.full_messages.each do |error| %>
+          <li><%= error %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
 <div>
     <%= f.label :title%>
