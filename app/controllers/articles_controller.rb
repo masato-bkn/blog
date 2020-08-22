@@ -21,7 +21,9 @@ class ArticlesController < ApplicationController
   end
 
   def show
+    @ids = fetch_current_user_comments
     @article = Article.find_by(id: params[:id])
+    @comment = Comment.new
   end
 
   def edit
