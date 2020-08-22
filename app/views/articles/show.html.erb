@@ -2,7 +2,7 @@
 
 <div class="card card-article">
   <div class="card-header card-article-header">
-    <p>No <%= @article.id%> <%= @article.title%></p>
+    <p><%= @article.title%></p>
   </div>
   <div class="card-body">
     <p class="card-text"><%= @article.content%></p>
@@ -10,7 +10,7 @@
     <%= render 'articles/good_form', {article: @article} %>  
     <% if user_signed_in? && current_user_article?(@article.id) %>
       <div class="float-right delete-section">
-        <%= form_with(model: @article, remote: true, method: :delete) do |f| %>
+        <%= form_with(model: @article, method: :delete, local: true) do |f| %>
           <%= f.button :type => "submit", class: "trash-button" do %>
             <i class="fas fa-trash"></i>
           <% end %>
@@ -20,9 +20,7 @@
   </div>
 </div>
 
-<% ids = fetch_current_user_comments %>
-
-<% if @article.comments.present? %>
+<% if @article.comments.any? %>
   <div class="comment-area">
     <h3>コメント</h3>
     <% @article.comments.includes(:user).each do |comment| %>
@@ -35,7 +33,7 @@
             <p class="card-text"><%= comment.text%></p>
             <p class="text-right"><%= format_time(comment.created_at) %></p>
 
-            <% if user_signed_in? && ids.include?(comment.id) %>
+            <% if user_signed_in? && @ids.include?(comment.id) %>
               <div class="float-right delete-section">
                 <%= form_with(model: comment, remote: true, method: :delete) do |f| %>
                   <%= f.button :type => "submit", class: "trash-button" do %>
@@ -53,7 +51,8 @@
 <% end %>
 
 <div class="comment-form">
-  <%= form_with(model: @article.comments, url: comments_path,) do |f|%>
+  <%= form_with(model: @comment, url: comments_path, local: true) do |f|%>
+    <%= render 'shared/error_messages', object: f.object %>
     <div class="form-group">
       <h3 for="comment_post_form">コメント投稿</h3>
       <%= f.text_area :text, class:"form-control", size: "1x5"%>

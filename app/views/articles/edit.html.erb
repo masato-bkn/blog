@@ -1,6 +1,7 @@
 <h1>編集</h1>
 
 <%= form_with(model: @article, local: true) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
   <div>
     <%= f.label :title %>
     <%= f.text_field :title %>

@@ -7,8 +7,7 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = current_user.articles.new(create_param)
-
+    @article = current_user.articles.new(article_param)
     if @article.save
       redirect_to article_url(id: @article.id)
     else
@@ -22,7 +21,9 @@ class ArticlesController < ApplicationController
   end
 
   def show
+    @ids = fetch_current_user_comments
     @article = Article.find_by(id: params[:id])
+    @comment = Comment.new
   end
 
   def edit
@@ -34,8 +35,8 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    if @article = Article.find_by(id: create_param[:id])
-      if @article.update(create_param)
+    if @article = Article.find_by(id: params[:id])
+      if @article.update(article_param)
         redirect_to @article
       else
         render 'edit'
@@ -54,7 +55,7 @@ class ArticlesController < ApplicationController
 
   private
 
-  def create_param
+  def article_param
     params.require(:article).permit(:id, :title, :content, :user_id)
   end
 

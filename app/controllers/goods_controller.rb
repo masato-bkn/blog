@@ -3,7 +3,7 @@ class GoodsController < ApplicationController
 
   # TODO: redirectではなく, Ajaxで 対応したい
   def create
-    current_user.do_thumb_up(create_param)
+    current_user.do_thumb_up(good_param)
     redirect_to root_path
   end
 
@@ -14,7 +14,7 @@ class GoodsController < ApplicationController
 
   private
 
-  def create_param
+  def good_param
     params.required(:article_id)
   end
 end
