@@ -30,7 +30,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 gem 'carrierwave',             '0.10.0'
-gem 'mini_magick',             '3.8.0'
+gem 'mini_magick',             '4.9.4'
 gem 'fog',                     '1.36.0'
 
 group :development, :test do
