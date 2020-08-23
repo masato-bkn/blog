@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :sign_in?, only: [:show, :edit, :update]
+
   def index; end
 
   def show
