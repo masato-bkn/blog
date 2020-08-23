@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :sign_in?, only: [:show, :edit, :update]
+
   def index; end
 
   def show
@@ -21,6 +23,6 @@ class UsersController < ApplicationController
   private
 
   def user_param
-    params.require(:user).permit(:id, :name, :picture)
+    params.require(:user).permit(:id, :name, :email, :picture)
   end
 end
