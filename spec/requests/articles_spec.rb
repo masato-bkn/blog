@@ -309,7 +309,7 @@ RSpec.describe ArticlesController, type: :request do
         context :scenario do
           it :answer do
             article1
-            expect { subject }.not_to change(Article.find(id), target)
+            expect { subject }.not_to change { Article.find(id).send(target) }.from(Article.find(id).send(target))
           end
         end
       end
