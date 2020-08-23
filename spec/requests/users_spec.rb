@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe GoodsController, type: :request do
   describe 'GET /users/:id' do
     subject do
-      get users_path(id: id)
+      get user_path(id: id)
       response
     end
 
@@ -11,8 +11,11 @@ RSpec.describe GoodsController, type: :request do
       1
     end
 
+    let :user1 do
+      create(:user1)
+    end
     it '200が返ること' do
-      subject
+      sign_in user1
       expect(subject).to have_http_status(:success)
     end
   end
@@ -39,10 +42,6 @@ RSpec.describe GoodsController, type: :request do
 
     let :email do
       'test1@gmail.com'
-    end
-
-    let :user1 do
-      create(:user1)
     end
 
     before :each do
