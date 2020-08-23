@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @articles = @user.articles
   end
 
   def edit
@@ -13,6 +14,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
+    @articles = @user.articles
     if @user.update(user_param)
       render 'show'
     else

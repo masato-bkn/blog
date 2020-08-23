@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  root 'static_pages#top'
+  root 'home#top'
   resources :users
   resources :articles
   resources :goods, only: [:create, :destroy]
