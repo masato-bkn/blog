@@ -6,18 +6,19 @@
       <span class="header-title">  *Blog app</span>
     <% end %>
     <div class="float-right">
+      <span class="post-link"><%= link_to "投稿する", new_article_path, { class:"link" } %></span>
       <% if user_signed_in?%>
         <span class="text-light user-name link">
           <%= link_to current_user.name, user_path(current_user.id), {class:"link"} %>
         </span>
-        <div class="btn btn-info">
+        <div class="btn btn-info sm">
           <%=link_to "ログアウト", destroy_user_session_path, method: :delete, class: "header-logout-button" %>
         </div>
       <% else %>
-        <div class="btn btn-success">
+        <div class="btn btn-success btn-sm">
          <%=link_to "ログイン", new_user_session_path, class: "header-login-button" %>
         </div>
-        <div class="btn btn-info">
+        <div class="btn btn-info btn-sm">
           <%=link_to "新規登録", new_user_registration_path, class: "header-signup-button" %>
         </div>
       <% end %>

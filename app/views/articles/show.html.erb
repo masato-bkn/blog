@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-8 offset-md-2">
 
-      <h2 class="page-title">詳細ページ</h2>
+      <h4 class="page-title">詳細ページ</h4>
       <div class="card card-article">
         <div class="card-header card-article-header">
           <p><%= @article.title%></p>
@@ -12,6 +12,7 @@
           <p class="text-right"><%= format_time(@article.created_at) %></p>
           <%= render 'articles/good_form', {article: @article} %>
           <% if user_signed_in? && current_user_article?(@article.id) %>
+
             <div class="float-right delete-section">
               <%= form_with(model: @article, method: :delete, local: true) do |f| %>
                 <%= f.button :type => "submit", class: "trash-button" do %>
@@ -23,9 +24,9 @@
         </div>
       </div>
 
-      <% if @article.comments.any? %>
+      <% if @article.comments.count > 0 %>
         <div class="comment-area">
-          <h3>コメント</h3>
+          <h4 class="page-title">コメント</h4>
           <% @article.comments.includes(:user).each do |comment| %>
             <div class="element">
               <div class="card">
@@ -57,7 +58,7 @@
         <%= form_with(model: @comment, url: comments_path, local: true) do |f|%>
           <%= render 'shared/error_messages', object: f.object %>
           <div class="form-group">
-            <h3 for="comment_post_form">コメント投稿</h3>
+            <h5>コメント投稿</h5>
             <%= f.text_area :text, class:"form-control", size: "1x5"%>
           </div>
           <%= f.hidden_field :article_id, value: @article.id %>

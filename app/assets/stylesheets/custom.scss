@@ -3,13 +3,17 @@
 }
 
 .page-title {
-  margin: 40px 0;
+  margin: 30px 0 10px 0;
 }
 
 .header {
     .link {
       text-decoration:none;
       color: white;
+    }
+    .post-link {
+      font-size: 12px;
+      margin-right: 30px;
     }
     &-title {
       color: white;
@@ -35,11 +39,12 @@
 
 
 .article {
-  margin: 50px 0px;
+  margin: 20px 0px;
     &-title {
       float: left;
     }
     .user-name {
+      font-size: 15px;
       float: right;
     }
     .link {
@@ -64,14 +69,14 @@
   &-area {
     padding: 30px 0px 60px 0px;
     .element {
-      padding: 20px 0px 20px 0px;
+      padding: 0px 0px 30px 0px;
       .delete-section {
         width: 30px
       }
     }
   }
   &-form {
-    padding-bottom: 30px; 
+    margin-top: 40px;
   }
 }
 
@@ -91,8 +96,11 @@
   background-color: white;
 }
 
-.user_image {
-  margin: 20px;
+.user-card {
+  width: 910px;
+  .user_image {
+    margin: 20px;
+  }
 }
 
 .error_explanation {
