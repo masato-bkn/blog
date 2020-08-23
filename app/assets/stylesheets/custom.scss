@@ -29,21 +29,24 @@
     }
 }
 
-.card {
-  &-article {
-    margin: 50px 0px;
+
+.article {
+  margin: 50px 0px;
     &-title {
-      text-decoration:none;
-      color: black;
+      float: left;
     }
     .user-name {
-      float: right
+      float: right;
+    }
+    .link {
+      text-decoration:none;
+      color: black;
     }
     .delete-section {
       width: 30px
     }
   }
-}
+
 
 .good-form {
   float: left
