@@ -11,7 +11,7 @@
           <p class="card-text"><%= @article.content%></p>
           <p class="text-right"><%= format_time(@article.created_at) %></p>
           <%= render 'articles/good_form', {article: @article} %>
-          <% if user_signed_in? && current_user_article?(@article.id) %>
+          <% if user_signed_in? && @article.owner?(current_user.id) %>
 
             <div class="float-right delete-section">
               <%= form_with(model: @article, method: :delete, local: true) do |f| %>
@@ -24,10 +24,10 @@
         </div>
       </div>
 
-      <% if @comments.count > 0 %>
+      <% if @article.comments.any? %>
         <div class="comment-area">
           <h4 class="page-title">コメント</h4>
-          <% @comments.each do |comment| %>
+          <% @article.comments.each do |comment| %>
             <div class="element">
               <div class="card">
                 <div class="card-header">
@@ -37,7 +37,7 @@
                   <p class="card-text"><%= comment.text%></p>
                   <p class="text-right"><%= format_time(comment.created_at) %></p>
 
-                  <% if user_signed_in? && @ids.include?(comment.id) %>
+                  <% if user_signed_in? &&  comment.owner?(current_user.id) %>
                     <div class="float-right delete-section">
                       <%= form_with(model: comment, remote: true, method: :delete) do |f| %>
                         <%= f.button :type => "submit", class: "trash-button" do %>

@@ -4,9 +4,11 @@ class CommentsController < ApplicationController
 
   def create
     @article = Article.find_by(id: comment_params[:article_id])
-    @comment = @article.comments.build(comment_params)
+    @comments = @article.comments
+
+    @comment = @comments.build(comment_params)
     @comment.save
-    @ids = fetch_current_user_comments
+
     render 'articles/show'
   end
 

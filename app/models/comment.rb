@@ -7,4 +7,8 @@ class Comment < ApplicationRecord
   validates :user_id, presence: true
   validates :text, presence: true, length: { maximum: 150 }
   validates :text, presence: true, length: { maximum: 150 }
+
+  def owner?(user_id)
+    self.user_id == user_id
+  end
 end
