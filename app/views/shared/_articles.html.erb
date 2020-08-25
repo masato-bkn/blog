@@ -1,5 +1,5 @@
-<h2 class="page-title">記事一覧</h2>
-<% @articles.includes(:goods, :user).each do |article| %>
+<h4 class="page-title">記事一覧</h4>
+<% @articles.each do |article| %>
   <div class="card article">
     <div class="card-header">
       <p class="article-title"><%= link_to article.title, article_path(id: article.id), {class: "link"} %></p>

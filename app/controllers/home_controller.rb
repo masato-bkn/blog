@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
   def top
-    @articles = Article.all
+    @articles = Article.includes(:user, :goods).all
   end
 end
