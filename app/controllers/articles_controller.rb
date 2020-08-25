@@ -3,7 +3,7 @@ class ArticlesController < ApplicationController
   before_action :correct_article?, only: [:destroy, :edit, :update]
 
   def index
-    @articles = Article.includes(:goods, :user).all
+    @articles = Article.includes(:user).all
   end
 
   def create
@@ -21,10 +21,8 @@ class ArticlesController < ApplicationController
   end
 
   def show
-    @ids = fetch_current_user_comments
-    @article = Article.find_by(id: params[:id])
-    @comments = @article.comments.includes(:user)
-    # フォームフォーム生成用
+    @article = Article.includes(comments: :user).find_by(id: params[:id])
+    # コメントフォーム生成用
     @comment = Comment.new
   end
 
