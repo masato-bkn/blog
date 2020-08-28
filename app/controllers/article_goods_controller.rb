@@ -1,4 +1,4 @@
-class GoodsController < ApplicationController
+class ArticleGoodsController < ApplicationController
   before_action :sign_in?, only: [:create, :destroy]
   before_action :generate_instance, only: [:create, :destroy]
 
@@ -32,5 +32,7 @@ class GoodsController < ApplicationController
     else
       @articles = Article.includes(comments: :user).all
     end
+    # TODO: 仮。あとでリファクタする
+    @article = Article.find_by(id: params[:article_id])
   end
 end

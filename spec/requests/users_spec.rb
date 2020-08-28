@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe GoodsController, type: :request do
+RSpec.describe ArticleGoodsController, type: :request do
   shared_examples 'ログインページにリダイレクトされる事' do
     it { is_expected.to redirect_to(new_user_session_path) }
   end

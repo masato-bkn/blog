@@ -1,8 +1,8 @@
-<% good = current_user.goods.find_by(article_id: article.id)%>
+<% good = current_user.article_goods.find_by(article_id: article.id)%>
 
 <div id="ungood-<%= article.id %>">
   <%= form_with(model: good,
-                url: article_good_path(
+                url: article_article_good_path(
                     article_id: article.id,
                     id: good.id ),
                 html: { method: :delete}, remote: true) do |f| %>
@@ -10,6 +10,6 @@
     <%= f.button :type => "submit", class: "ungood-btn" do %>
       <i class="fas fa-thumbs-up fa-fw"></i>
     <% end %>
-    <%=  article.goods.count %>
+    <%=  article.article_goods.count %>
   <% end %>
 </div>

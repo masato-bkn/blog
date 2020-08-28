@@ -156,7 +156,7 @@ RSpec.describe ArticlesController, type: :request do
           it 'いいね除されていること' do
             article1
             good1
-            expect { subject }.to change(Good, :count).by(-1)
+            expect { subject }.to change(ArticleGood, :count).by(-1)
           end
         end
       end

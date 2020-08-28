@@ -6,17 +6,17 @@ class User < ApplicationRecord
   mount_uploader :picture, PictureUploader
   validates :name, presence: true
   has_many :articles
-  has_many :goods
+  has_many :article_goods
   has_many :comments
 
   validate :picture_size
 
   def do_thumb_up(article_id)
-    goods.create(article_id: article_id)
+    article_goods.create(article_id: article_id)
   end
 
   def do_thumb_down(id)
-    goods.find_by(id: id)&.destroy
+    article_goods.find_by(id: id)&.destroy
   end
 
   private
