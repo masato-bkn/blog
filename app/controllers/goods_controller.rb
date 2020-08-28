@@ -27,7 +27,10 @@ class GoodsController < ApplicationController
   end
 
   def generate_instance
-    @articles = Article.includes(comments: :user).all
-    @article = @articles.find_by(id: params[:article_id])
+    if request.referer&.include?('articles/')
+      @article = Article.find_by(id: params[:article_id])
+    else
+      @articles = Article.includes(comments: :user).all
+    end
   end
 end
