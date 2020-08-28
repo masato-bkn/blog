@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_19_233206) do
+ActiveRecord::Schema.define(version: 2020_08_28_231851) do
+
+  create_table "article_goods", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "article_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id", "article_id"], name: "index_article_goods_on_user_id_and_article_id", unique: true
+  end
 
   create_table "articles", force: :cascade do |t|
     t.string "title", default: "", null: false
@@ -29,14 +37,6 @@ ActiveRecord::Schema.define(version: 2020_08_19_233206) do
     t.integer "user_id"
     t.index ["article_id"], name: "index_comments_on_article_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
-  end
-
-  create_table "goods", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "article_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id", "article_id"], name: "index_goods_on_user_id_and_article_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
