@@ -32,12 +32,10 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    if @article = Article.find_by(id: params[:id])
-      if @article.update(article_param)
-        redirect_to @article
-      else
-        render 'edit'
-      end
+    render 'edit' unless @article = Article.find_by(id: params[:id])
+
+    if @article.update(article_param)
+      redirect_to @article
     else
       render 'edit'
     end
