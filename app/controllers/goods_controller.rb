@@ -1,8 +1,8 @@
 class GoodsController < ApplicationController
   before_action :sign_in?, only: [:create, :destroy]
+  before_action :generate_instance, only: [:create, :destroy]
 
   def create
-    generate_instance(params[:article_id])
     current_user.do_thumb_up(good_param)
 
     respond_to do |format|
@@ -12,9 +12,6 @@ class GoodsController < ApplicationController
   end
 
   def destroy
-    if current_user.goods.find_by(id: params[:id]).present?
-      generate_instance(current_user.goods.find_by(id: params[:id]).article_id)
-    end
     current_user.do_thumb_down(params[:id])
 
     respond_to do |format|
@@ -29,13 +26,8 @@ class GoodsController < ApplicationController
     params.required(:article_id)
   end
 
-  def generate_instance(id)
-    if request.referer&.include?('articles/')
-      # コメントフォーム生成用
-      @comment = Comment.new
-    else
-      @articles = Article.includes(comments: :user).all
-    end
-    @article = (@articles || Article.includes(comments: :user)).find_by(id: id)
+  def generate_instance
+    @articles = Article.includes(comments: :user).all
+    @article = @articles.find_by(id: params[:article_id])
   end
 end

@@ -55,7 +55,7 @@
       <% end %>
 
       <div class="comment-form">
-        <%= form_with(model: @comment, url: comments_path, local: true) do |f|%>
+        <%= form_with(model: Comment.new, url: comments_path, local: true) do |f|%>
           <%= render 'shared/error_messages', object: f.object %>
           <div class="form-group">
             <h5>コメント投稿</h5>

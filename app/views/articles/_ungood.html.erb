@@ -1,5 +1,10 @@
+<% good = current_user.goods.find_by(article_id: article.id)%>
+
 <div id="ungood-<%= article.id %>">
-  <%= form_with(model: current_user.goods.find_by(article_id: article.id),
+  <%= form_with(model: good,
+                url: article_good_path(
+                    article_id: article.id,
+                    id: good.id ),
                 html: { method: :delete}, remote: true) do |f| %>
     <%= hidden_field_tag :article_id, article.id %>
     <%= f.button :type => "submit", class: "ungood-btn" do %>

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe GoodsController, type: :request do
   describe 'POST /goods' do
     subject do
-      post goods_path(params)
+      post article_goods_path(params)
     end
 
     let :params do
@@ -74,18 +74,26 @@ RSpec.describe GoodsController, type: :request do
 
   describe 'DELETE /goods' do
     subject do
-      delete good_path(id: id)
+      delete article_good_path(article_id: article1.id, id: id)
     end
 
     let :id do
       1
     end
 
+    let :article1 do
+      create(:article1)
+    end
+
+    let :good1 do
+      create(:good1)
+    end
+
     context 'いいねが存在する場合' do
       before :each do
         sign_in create(:user1)
-        create(:article1)
-        create(:good1)
+        article1
+        good1
       end
 
       it 'いいねで削除できていること' do
