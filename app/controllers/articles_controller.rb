@@ -17,13 +17,10 @@ class ArticlesController < ApplicationController
 
   def new
     @article = Article.new
-    @comment = Comment.new
   end
 
   def show
     @article = Article.includes(comments: :user).find_by(id: params[:id])
-    # コメントフォーム生成用
-    @comment = Comment.new
   end
 
   def edit
