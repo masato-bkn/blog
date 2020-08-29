@@ -11,11 +11,11 @@ class User < ApplicationRecord
 
   validate :picture_size
 
-  def do_thumb_up(article_id)
+  def do_thumb_up_to_article(article_id)
     article_goods.create(article_id: article_id)
   end
 
-  def do_thumb_down(id)
+  def do_thumb_down_to_article(id)
     article_goods.find_by(id: id)&.destroy
   end
 

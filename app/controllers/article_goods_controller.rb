@@ -3,6 +3,8 @@ class ArticleGoodsController < ApplicationController
   before_action :generate_instance, only: [:create, :destroy]
 
   def create
+    current_user.do_thumb_up_to_article(good_param)
+
     respond_to do |format|
       format.html { redirect_to request.referrer || root_path }
       format.js { render 'articles/goods/destroy.js.erb' }
@@ -10,7 +12,7 @@ class ArticleGoodsController < ApplicationController
   end
 
   def destroy
-    current_user.do_thumb_down(params[:id])
+    current_user.do_thumb_down_to_article(params[:id])
 
     respond_to do |format|
       format.html { redirect_to request.referrer || root_path }
