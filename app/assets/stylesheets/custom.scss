@@ -47,10 +47,6 @@
       font-size: 15px;
       float: right;
     }
-    .link {
-      text-decoration:none;
-      color: black;
-    }
     .delete-section {
       width: 30px
     }
@@ -105,4 +101,9 @@
 
 .error_explanation {
   width : 700px;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
 }
