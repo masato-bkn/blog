@@ -21,6 +21,14 @@ class User < ApplicationRecord
     article_goods.find_by(id: id)&.destroy
   end
 
+  def do_thumb_up_to_comment(comment_id)
+    comment_goods.create(comment_id: comment_id)
+  end
+
+  def do_thumb_down_to_comment(id)
+    comment_goods.find_by(id: id)&.destroy
+  end
+
   private
 
   def picture_size
