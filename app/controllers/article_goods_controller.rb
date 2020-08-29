@@ -3,11 +3,9 @@ class ArticleGoodsController < ApplicationController
   before_action :generate_instance, only: [:create, :destroy]
 
   def create
-    current_user.do_thumb_up(good_param)
-
     respond_to do |format|
       format.html { redirect_to request.referrer || root_path }
-      format.js
+      format.js { render 'articles/goods/destroy.js.erb' }
     end
   end
 
@@ -16,7 +14,7 @@ class ArticleGoodsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to request.referrer || root_path }
-      format.js
+      format.js { render 'articles/goods/create.js.erb' }
     end
   end
 
