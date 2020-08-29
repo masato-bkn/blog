@@ -6,8 +6,7 @@ class CommentsController < ApplicationController
     @article = Article.find_by(id: comment_params[:article_id])
     @comments = @article.comments
 
-    @comment = @comments.build(comment_params)
-    @comment.save
+    @comments.build(comment_params).save
 
     render 'articles/show'
   end

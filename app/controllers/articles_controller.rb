@@ -17,13 +17,10 @@ class ArticlesController < ApplicationController
 
   def new
     @article = Article.new
-    @comment = Comment.new
   end
 
   def show
     @article = Article.includes(comments: :user).find_by(id: params[:id])
-    # コメントフォーム生成用
-    @comment = Comment.new
   end
 
   def edit
@@ -35,12 +32,10 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    if @article = Article.find_by(id: params[:id])
-      if @article.update(article_param)
-        redirect_to @article
-      else
-        render 'edit'
-      end
+    render 'edit' unless @article = Article.find_by(id: params[:id])
+
+    if @article.update(article_param)
+      redirect_to @article
     else
       render 'edit'
     end

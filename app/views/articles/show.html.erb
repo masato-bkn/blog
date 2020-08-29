@@ -10,7 +10,7 @@
         <div class="card-body">
           <p class="card-text"><%= @article.content%></p>
           <p class="text-right"><%= format_time(@article.created_at) %></p>
-          <%= render 'articles/good_form', {article: @article} %>
+          <%= render 'articles/goods/good_form', {article: @article} %>
           <% if user_signed_in? && @article.owner?(current_user.id) %>
 
             <div class="float-right delete-section">
@@ -55,7 +55,7 @@
       <% end %>
 
       <div class="comment-form">
-        <%= form_with(model: @comment, url: comments_path, local: true) do |f|%>
+        <%= form_with(model: Comment.new, url: comments_path, local: true) do |f|%>
           <%= render 'shared/error_messages', object: f.object %>
           <div class="form-group">
             <h5>コメント投稿</h5>
