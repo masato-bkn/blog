@@ -1,7 +1,7 @@
 module GoodHelper
-  def thumb_up?(goods)
+  def thumb_up?(objects)
     return false unless current_user
-    return true if goods.any? { |good| good.owner?(current_user.id) }
+    return true if objects.any? { |object| object.owner?(current_user.id) }
 
     false
   end

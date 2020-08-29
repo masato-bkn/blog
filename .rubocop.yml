@@ -70,3 +70,5 @@ Style/SymbolArray:
   Enabled: false
 Lint/AssignmentInCondition:
   Enabled: false
+Metrics/AbcSize:
+  Max: 40

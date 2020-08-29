@@ -8,7 +8,7 @@ RSpec.describe CommentGoodsController, type: :request do
 
     let :params do
       {
-          comment_id: comment_id
+        comment_id: comment_id
       }
     end
 
@@ -74,10 +74,14 @@ RSpec.describe CommentGoodsController, type: :request do
   end
   describe 'DELETE /comment_goods' do
     subject do
-      delete comment_good_path(id: id)
+      delete comment_good_path(id: id, comment_id: comment_id)
     end
 
     let :id do
+      1
+    end
+
+    let :comment_id do
       1
     end
 
