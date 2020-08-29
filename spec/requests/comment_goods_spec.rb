@@ -1,23 +1,18 @@
 require 'rails_helper'
 
-RSpec.describe ArticleGoodsController, type: :request do
-  describe 'POST /article_goods' do
+RSpec.describe CommentGoodsController, type: :request do
+  describe 'POST /comments_goods' do
     subject do
-      post article_goods_path(params)
+      post comment_goods_path(params)
     end
 
     let :params do
       {
-        user_id: user_id,
-        article_id: article_id
+        comment_id: comment_id
       }
     end
 
-    let :user_id do
-      1
-    end
-
-    let :article_id do
+    let :comment_id do
       1
     end
 
@@ -29,6 +24,10 @@ RSpec.describe ArticleGoodsController, type: :request do
       create(:article1)
     end
 
+    let :comment1 do
+      create(:comment1)
+    end
+
     context 'ログインしている場合' do
       before :each do
         sign_in user1
@@ -38,31 +37,33 @@ RSpec.describe ArticleGoodsController, type: :request do
         sign_out user1
       end
 
-      context '記事が存在する場合' do
+      context 'コメントが存在する場合' do
         it 'いいねできていること' do
           expect do
             article1
+            comment1
             subject
-          end.to change(ArticleGood, :count).by(1)
+          end.to change(CommentGood, :count).by(1)
         end
       end
 
-      context '記事が存在しない場合' do
+      context 'コメントが存在しない場合' do
         it 'いいねできないこと' do
           expect do
             subject
-          end.to change(ArticleGood, :count).by(0)
+          end.to change(CommentGood, :count).by(0)
         end
       end
     end
     context 'ログインしていない場合' do
-      context '記事が存在する場合' do
+      context 'コメントが存在する場合' do
         it 'いいねできないこと' do
           expect do
             user1
             article1
+            comment1
             subject
-          end.to change(ArticleGood, :count).by(0)
+          end.to change(CommentGood, :count).by(0)
         end
 
         it 'ログインページにリダイレクトされること' do
@@ -71,13 +72,16 @@ RSpec.describe ArticleGoodsController, type: :request do
       end
     end
   end
-
-  describe 'DELETE /article_goods' do
+  describe 'DELETE /comment_goods' do
     subject do
-      delete article_good_path(article_id: article1.id, id: id)
+      delete comment_good_path(id: id, comment_id: comment_id)
     end
 
     let :id do
+      1
+    end
+
+    let :comment_id do
       1
     end
 
@@ -85,21 +89,26 @@ RSpec.describe ArticleGoodsController, type: :request do
       create(:article1)
     end
 
+    let :comment1 do
+      create(:comment1)
+    end
+
     let :good1 do
-      create(:article_good1)
+      create(:comment_good1)
     end
 
     context 'いいねが存在する場合' do
       before :each do
         sign_in create(:user1)
         article1
+        comment1
         good1
       end
 
       it 'いいねで削除できていること' do
         expect do
           subject
-        end.to change(ArticleGood, :count).by(-1)
+        end.to change(CommentGood, :count).by(-1)
       end
     end
 
@@ -111,7 +120,7 @@ RSpec.describe ArticleGoodsController, type: :request do
       it 'Goodが変化しないこと' do
         expect do
           subject
-        end.to change(ArticleGood, :count).by(0)
+        end.to change(CommentGood, :count).by(0)
       end
     end
   end

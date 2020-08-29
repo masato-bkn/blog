@@ -1,0 +1,5 @@
+<% if thumb_up?(comment.goods) %>
+  <%= render 'comments/goods/ungood', {comment: comment} %>
+<% else %>
+  <%= render 'comments/goods/good', {comment: comment} %>
+<% end %>

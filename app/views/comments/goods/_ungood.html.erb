@@ -1,0 +1,12 @@
+<div id="ungood-<%= comment.id %>">
+  <%= form_with(model: current_user.comment_goods.find_by(comment_id: comment.id),
+                method: :delete,
+                remote: true
+      ) do |f| %>
+    <%= hidden_field_tag :comment_id, comment.id %>
+    <%= f.button :type => "submit", class: "ungood-btn" do %>
+      <i class="fas fa-thumbs-up fa-fw"></i>
+    <% end %>
+    <%=  comment.goods.count %>
+  <% end %>
+</div>

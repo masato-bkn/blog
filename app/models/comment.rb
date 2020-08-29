@@ -5,6 +5,7 @@ class Comment < ApplicationRecord
 
   belongs_to :article
   belongs_to :user
+  has_many :goods, dependent: :destroy, class_name: 'CommentGood'
 
   default_scope -> { order(created_at: :desc) }
 

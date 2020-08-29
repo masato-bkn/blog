@@ -151,9 +151,9 @@ RSpec.describe ArticlesController, type: :request do
 
         context '記事に紐づくいいねが存在する場合' do
           let :good1 do
-            create(:good1)
+            create(:article_good1)
           end
-          it 'いいね除されていること' do
+          it 'いいねが削除されていること' do
             article1
             good1
             expect { subject }.to change(ArticleGood, :count).by(-1)

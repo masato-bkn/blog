@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   resources :articles
   resources :article_goods, only: [:create, :destroy]
   resources :comments, only: [:create, :destroy]
+  resources :comment_goods, only: [:create, :destroy]
 end

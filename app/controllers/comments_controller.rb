@@ -13,6 +13,7 @@ class CommentsController < ApplicationController
 
   def destroy
     Comment.find_by(params[:id]).destroy!
+    redirect_to request.referer || root_path
   end
 
   private
