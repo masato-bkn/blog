@@ -4,12 +4,14 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   mount_uploader :picture, PictureUploader
+
   validates :name, presence: true
+  validate :picture_size
+
   has_many :articles
   has_many :article_goods
   has_many :comments
-
-  validate :picture_size
+  has_many :comment_goods
 
   def do_thumb_up_to_article(article_id)
     article_goods.create(article_id: article_id)
