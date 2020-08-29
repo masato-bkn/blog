@@ -27,12 +27,7 @@ class ArticleGoodsController < ApplicationController
   end
 
   def generate_instance
-    if request.referer&.include?('articles/')
-      @article = Article.find_by(id: params[:article_id])
-    else
-      @articles = Article.includes(comments: :user).all
-    end
-    # TODO: 仮。あとでリファクタする
-    @article = Article.find_by(id: params[:article_id])
+    @articles = Article.includes(comments: :user).all unless request.referer&.include?('articles/')
+    @article = (@articles ||= Article).find_by(id: params[:article_id])
   end
 end
