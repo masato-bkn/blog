@@ -12,8 +12,12 @@
           <p class="text-right"><%= format_time(@article.created_at) %></p>
           <%= render 'articles/goods/good_form', {article: @article} %>
           <% if user_signed_in? && @article.owner?(current_user.id) %>
-
-            <div class="float-right delete-section">
+            <div class="float-right">
+              <%= form_with(url: edit_article_path(@article.id), method: :get, local: true) do |f| %>
+                <%= f.button :type => "submit", class: "trash-button" do %>
+                  <i class="fas fa-edit"></i>
+                <% end %>
+              <% end %>
               <%= form_with(model: @article, method: :delete, local: true) do |f| %>
                 <%= f.button :type => "submit", class: "trash-button" do %>
                   <i class="fas fa-trash"></i>
@@ -31,7 +35,7 @@
             <div class="element">
               <div class="card">
                 <div class="card-header">
-                  <%= comment.user.name %>
+                  <%= link_to(comment.user.name, user_path(comment.user.id), {class:"link"}) %>
                 </div>
                 <div class="card-body">
                   <p class="card-text"><%= comment.text%></p>

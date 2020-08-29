@@ -11,7 +11,7 @@ class CommentGoodsController < ApplicationController
   end
 
   def destroy
-    @comment = current_user.comments.find_by(id: params[:comment_id])
+    @comment = Comment.find_by(id: params[:comment_id])
 
     current_user.do_thumb_down_to_comment(@comment.goods, params[:id]) if @comment
 
