@@ -3,8 +3,7 @@ Rails.application.routes.draw do
 
   root 'home#top'
   resources :users
-  resources :articles do
-    resources :article_goods, only: [:create, :destroy]
-  end
+  resources :articles
+  resources :article_goods, only: [:create, :destroy]
   resources :comments, only: [:create, :destroy]
 end

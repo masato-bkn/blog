@@ -1,9 +1,9 @@
 <div id="good-<%= article.id %>">
-  <%= form_with(model: article.article_goods.build, url: article_article_goods_path(article_id: article.id), remote: true) do |f| %>
+  <%= form_with(model: article.goods.build, url: article_goods_path, remote: true) do |f| %>
       <%= hidden_field_tag :article_id, article.id %>
       <%= f.button :type => "submit", class: "good-btn" do %>
         <i class="far fa-thumbs-up fa-fw"></i>
       <% end %>
-      <%=  article.article_goods.count %>
+      <%=  article.goods.count %>
   <% end %>
 </div>

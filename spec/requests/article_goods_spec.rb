@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ArticleGoodsController, type: :request do
   describe 'POST /article_goods' do
     subject do
-      post article_article_goods_path(params)
+      post article_goods_path(params)
     end
 
     let :params do
@@ -74,7 +74,7 @@ RSpec.describe ArticleGoodsController, type: :request do
 
   describe 'DELETE /article_goods' do
     subject do
-      delete article_article_good_path(article_id: article1.id, id: id)
+      delete article_good_path(article_id: article1.id, id: id)
     end
 
     let :id do
