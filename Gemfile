@@ -33,6 +33,8 @@ gem 'carrierwave',             '0.10.0'
 gem 'mini_magick',             '4.9.4'
 gem 'fog',                     '1.36.0'
 
+gem 'counter_culture'
+
 group :development, :test do
   gem 'sqlite3', '~> 1.4'
   gem 'rubocop'

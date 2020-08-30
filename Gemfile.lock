@@ -63,6 +63,9 @@ GEM
       memoizable (~> 0.4.0)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    after_commit_action (1.1.0)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
     aliyun-sdk (0.8.0)
       nokogiri (~> 1.6)
       rest-client (~> 2.0)
@@ -99,6 +102,10 @@ GEM
       adamantium (~> 0.2.0)
       equalizer (~> 0.0.9)
     concurrent-ruby (1.1.6)
+    counter_culture (2.6.0)
+      activerecord (>= 4.2)
+      activesupport (>= 4.2)
+      after_commit_action (~> 1.0)
     crass (1.0.6)
     devise (4.7.2)
       bcrypt (~> 3.0)
@@ -452,6 +459,7 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   carrierwave (= 0.10.0)
+  counter_culture
   devise
   factory_bot_rails
   fog (= 1.36.0)

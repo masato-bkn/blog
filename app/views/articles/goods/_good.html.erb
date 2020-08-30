@@ -4,6 +4,6 @@
       <%= f.button :type => "submit", class: "good-btn" do %>
         <i class="far fa-thumbs-up fa-fw"></i>
       <% end %>
-      <%=  article.goods.count %>
+    <%= @good_count || article.good_count %>
   <% end %>
 </div>
