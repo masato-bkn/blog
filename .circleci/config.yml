@@ -65,15 +65,12 @@ jobs:
       app-name: 
         default: $HEROKU_APP_NAME_PRD
         type: string
-      post-deploy:
-        default:
-          - run:
-              command: heroku run rails db:migrate --app $HEROKU_APP_NAME_PRD
-        type: steps
     steps:
       - checkout
       - heroku/install
       - heroku/deploy-via-git:
           app-name: << parameters.app-name >>
-      - steps: << parameters.post-deploy >>
-  
+      - run:
+          name: migrate
+          command: |
+            heroku run rails db:migrate --app $HEROKU_APP_NAME_PRD
