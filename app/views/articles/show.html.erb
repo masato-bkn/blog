@@ -44,7 +44,7 @@
                   <%= render 'comments/goods/good_form', comment: comment %>
                   <% if user_signed_in? &&  comment.owner?(current_user.id) %>
                     <div class="float-right delete-section">
-                      <%= form_with(model: comment, remote: true, method: :delete) do |f| %>
+                      <%= form_with(model: comment, local: true, method: :delete) do |f| %>
                         <%= f.button :type => "submit", class: "trash-button" do %>
                           <i class="fas fa-trash"></i>
                         <% end %>
