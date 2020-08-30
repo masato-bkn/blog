@@ -5,7 +5,8 @@
       <h4 class="page-title">詳細ページ</h4>
       <div class="card card-article">
         <div class="card-header card-article-header">
-          <p><%= @article.title%></p>
+          <%= @article.title%>
+          <%= link_to(@article.user.name, user_path(@article.user.id), {class:"link float-right"}) %>
         </div>
         <div class="card-body">
           <p class="card-text"><%= @article.content%></p>
