@@ -5,6 +5,8 @@ class ArticleGood < ApplicationRecord
   belongs_to :user
   belongs_to :article
 
+  counter_culture :article, column_name: 'good_count'
+
   def owner?(user_id)
     self.user_id == user_id
   end

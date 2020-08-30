@@ -25,8 +25,8 @@ class User < ApplicationRecord
     comment_goods.create(comment_id: comment_id)
   end
 
-  def do_thumb_down_to_comment(goods, id)
-    goods.find_by(id: id)&.destroy
+  def do_thumb_down_to_comment(id)
+    comment_goods.find_by(id: id)&.destroy
   end
 
   private
