@@ -45,7 +45,7 @@ class ArticlesController < ApplicationController
     if article = Article.find_by(id: params[:id])
       article.destroy!
     end
-    redirect_to articles_path
+    redirect_to root_path
   end
 
   private
