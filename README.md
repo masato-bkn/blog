@@ -1,24 +1,14 @@
-# README
+## blog app
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### URL
+https://calm-island-83153.herokuapp.com/
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### テストUSER
+```
+ユーザ名
+test_user_1
+アドレス
+test_user_1@gmail.com
+パスワード
+test_user_1
+```
