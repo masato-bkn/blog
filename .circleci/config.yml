@@ -35,7 +35,6 @@ jobs:
           command: |
             gem update --system
             gem install bundler -v 2.1.4
-            bundle update --bundler
             bundle install
       - run:
           name: rubocop
