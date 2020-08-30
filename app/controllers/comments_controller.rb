@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
 
     @comments.build(comment_params).save
 
-    render 'articles/show'
+    redirect_to request.referer || root_path
   end
 
   def destroy

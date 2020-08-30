@@ -44,7 +44,7 @@
                   <%= render 'comments/goods/good_form', comment: comment %>
                   <% if user_signed_in? &&  comment.owner?(current_user.id) %>
                     <div class="float-right delete-section">
-                      <%= form_with(model: comment, remote: true, method: :delete) do |f| %>
+                      <%= form_with(model: comment, local: true, method: :delete) do |f| %>
                         <%= f.button :type => "submit", class: "trash-button" do %>
                           <i class="fas fa-trash"></i>
                         <% end %>
@@ -67,7 +67,7 @@
             <%= f.text_area :text, class:"form-control", size: "1x5"%>
           </div>
           <%= f.hidden_field :article_id, value: @article.id %>
-          <%= f.hidden_field :user_id, value: @article.user_id %>
+          <%= f.hidden_field :user_id, value: current_user&.id %>
           <%= f.submit '送信', class:"btn btn-primary"%>
         <% end %>
       </div>
