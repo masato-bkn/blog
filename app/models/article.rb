@@ -16,4 +16,8 @@ class Article < ApplicationRecord
   def do_thumb_up
     goods.create(article_id: id, user_id: user_id)
   end
+
+  def do_thumb_down
+    goods.find_by(article_id: id, user_id: user_id).destroy
+  end
 end

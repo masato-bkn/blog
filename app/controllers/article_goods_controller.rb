@@ -13,7 +13,7 @@ class ArticleGoodsController < ApplicationController
   end
 
   def destroy
-    current_user.do_thumb_down_to_article(params[:id])
+    @article.do_thumb_down if @article = current_user.articles.find_by(id: params[:article_id])
 
     # いいね削除後でないとgood_countが更新されないため、後ろでインスタンスを生成する
     generate_instance
