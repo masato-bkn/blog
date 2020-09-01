@@ -2,10 +2,12 @@ class CommentGoodsController < ApplicationController
   before_action :sign_in?, only: [:create, :destroy]
 
   def create
-    current_user.do_thumb_up_to_comment(good_param)&.comment
+    if @comment = current_user.comments.find_by(id: params[:comment_id])
+      @comment.do_thumb_up
+      # 最新のgood_countを@commentに反映させるため
+      @comment.reload
+    end
 
-    # いいね作成後でないとgood_countが更新されないため、後ろでインスタンスを生成する
-    generate_instance(good_param)
     respond_to do |format|
       format.html { redirect_to request.referrer || root_path }
       format.js { render 'comments/goods/destroy.js.erb' }
@@ -24,10 +26,6 @@ class CommentGoodsController < ApplicationController
   end
 
   private
-
-  def good_param
-    params.require(:comment_id)
-  end
 
   def generate_instance(id)
     @comment = Comment.find_by(id: id)
