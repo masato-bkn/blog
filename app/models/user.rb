@@ -13,10 +13,6 @@ class User < ApplicationRecord
   has_many :comments
   has_many :comment_goods
 
-  def do_thumb_down_to_comment(id)
-    comment_goods.find_by(id: id)&.destroy
-  end
-
   private
 
   def picture_size
