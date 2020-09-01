@@ -32,10 +32,4 @@ class ArticleGoodsController < ApplicationController
       format.js { render 'articles/goods/create.js.erb' }
     end
   end
-
-  private
-
-  def good_param
-    params.required(:article_id)
-  end
 end
