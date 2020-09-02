@@ -7,11 +7,11 @@
           プロフィール
         </div>
         <div class="card-body">
-          <%= form_with(model: @user, local: true) do |f| %>
+          <%= form_with(model: current_user, local: true) do |f| %>
             <%= render 'shared/error_messages', object: f.object %>
             <div class="user_image">
-              <% if @user.picture? %>
-                <%= image_tag @user.picture.url %>
+              <% if current_user.picture? %>
+                <%= image_tag current_user.picture.url %>
               <% else %>
                 <%= image_tag "default.png",:size => '80x80' %>
               <% end %>

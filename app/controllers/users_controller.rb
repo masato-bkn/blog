@@ -7,9 +7,7 @@ class UsersController < ApplicationController
     @user = User.includes(:articles).find(params[:id])
   end
 
-  def edit
-    @user = User.find(params[:id])
-  end
+  def edit; end
 
   def update
     @user = User.find(params[:id])
