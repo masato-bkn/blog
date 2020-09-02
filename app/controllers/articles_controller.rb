@@ -32,7 +32,7 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    render 'edit' unless @article = Article.find_by(id: params[:id])
+    render 'edit' unless @article = current_user.articles.find_by(id: params[:id])
 
     if @article.update(article_param)
       redirect_to @article
