@@ -4,7 +4,7 @@ orbs:
   heroku: circleci/heroku@1.0.1
 
 workflows:
-   test_and_deploy:
+  test_and_deploy:
     jobs:
       - test
       - deploy_prd:
@@ -30,6 +30,10 @@ jobs:
     executor: default
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - blog-app-bundle-v1-{{ checksum "Gemfile.lock" }}
+            - blog-app-bundle-v1-
       - run:
           name: install dependencies
           command: |
@@ -37,32 +41,36 @@ jobs:
             gem install bundler -v 2.1.4
             bundle update --bundler
             bundle install
+      - save_cache:
+          key: blog-app-bundle-v1-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
       - run:
           name: rubocop
           command: |
             bundle exec rubocop
-      # 以下はRails6でWebpackerを使う場合は必須   
-      - restore_cache:  
-          keys:  
-            - yarn-cache-v1-{{ checksum "yarn.lock" }}  
-            - yarn-cache-v1-  
+      # 以下はRails6でWebpackerを使う場合は必須
+      - restore_cache:
+          keys:
+            - yarn-cache-v1-{{ checksum "yarn.lock" }}
+            - yarn-cache-v1-
 
-      - run:  
-          name: Yarn Install  
-          command: yarn install --cache-folder ~/.cache/yarn  
+      - run:
+          name: Yarn Install
+          command: yarn install --cache-folder ~/.cache/yarn
 
-      - save_cache:  
-          key: yarn-cache-v1-{{ checksum "yarn.lock" }}  
-          paths:  
-            - ~/.cache/yarn  
-      - run: 
+      - save_cache:
+          key: yarn-cache-v1-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
           name: rspec
           command: |
             bundle exec rspec
   deploy_prd:
     executor: heroku/default
     parameters:
-      app-name: 
+      app-name:
         default: $HEROKU_APP_NAME_PRD
         type: string
     steps:
