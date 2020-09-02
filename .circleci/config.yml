@@ -54,11 +54,9 @@ jobs:
           keys:
             - yarn-cache-v1-{{ checksum "yarn.lock" }}
             - yarn-cache-v1-
-
       - run:
           name: Yarn Install
           command: yarn install --cache-folder ~/.cache/yarn
-
       - save_cache:
           key: yarn-cache-v1-{{ checksum "yarn.lock" }}
           paths:
@@ -76,9 +74,9 @@ jobs:
     steps:
       - checkout
       - heroku/install
-      - heroku/deploy-via-git:
-          app-name: << parameters.app-name >>
       - run:
           name: migrate
-          command:
+          command: |
             heroku run rails db:migrate --app $HEROKU_APP_NAME_PRD
+      - heroku/deploy-via-git:
+          app-name: << parameters.app-name >>
