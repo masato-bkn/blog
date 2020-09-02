@@ -5,6 +5,10 @@ RSpec.describe ArticleGoodsController, type: :request do
     it { is_expected.to redirect_to(new_user_session_path) }
   end
 
+  shared_examples '200が返ること' do
+    it { expect(subject).to have_http_status(:success) }
+  end
+
   describe 'GET /users/:id' do
     subject do
       get user_path(id: id)
@@ -24,9 +28,7 @@ RSpec.describe ArticleGoodsController, type: :request do
         sign_in user1
       end
 
-      it '200が返ること' do
-        expect(subject).to have_http_status(:success)
-      end
+      it_behaves_like '200が返ること'
     end
 
     context 'ログインしていない場合' do
@@ -34,7 +36,7 @@ RSpec.describe ArticleGoodsController, type: :request do
         user1
       end
 
-      it_behaves_like 'ログインページにリダイレクトされる事'
+      it_behaves_like '200が返ること'
     end
   end
 
@@ -57,9 +59,7 @@ RSpec.describe ArticleGoodsController, type: :request do
         sign_in user1
       end
 
-      it '200が返ること' do
-        expect(subject).to have_http_status(:success)
-      end
+      it_behaves_like '200が返ること'
     end
 
     context 'ログインしていない場合' do
