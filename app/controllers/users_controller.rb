@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :sign_in?, only: [:show, :edit, :update]
+  before_action :sign_in?, only: [:edit, :update]
 
   def index; end
 
@@ -7,12 +7,10 @@ class UsersController < ApplicationController
     @user = User.includes(:articles).find(params[:id])
   end
 
-  def edit
-    @user = User.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @user = User.find(params[:id])
+    @user = current_user
     @articles = @user.articles
     if @user.update(user_param)
       render 'show'

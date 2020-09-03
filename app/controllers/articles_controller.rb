@@ -24,7 +24,7 @@ class ArticlesController < ApplicationController
   end
 
   def edit
-    if @article = Article.find_by(id: params[:id])
+    if @article = current_user.articles.find_by(id: params[:id])
       render 'edit'
     else
       redirect_to articles_path
@@ -32,7 +32,7 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    render 'edit' unless @article = Article.find_by(id: params[:id])
+    render 'edit' unless @article = current_user.articles.find_by(id: params[:id])
 
     if @article.update(article_param)
       redirect_to @article
@@ -42,7 +42,7 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    if article = Article.find_by(id: params[:id])
+    if article = current_user.articles.find_by(id: params[:id])
       article.destroy!
     end
     redirect_to root_path

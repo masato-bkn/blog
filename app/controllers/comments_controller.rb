@@ -12,7 +12,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    Comment.find_by(params[:id]).destroy!
+    current_user.comments.find_by(params[:id]).destroy!
     redirect_to request.referer || root_path
   end
 
