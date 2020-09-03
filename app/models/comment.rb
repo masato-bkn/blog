@@ -13,11 +13,11 @@ class Comment < ApplicationRecord
     self.user_id == user_id
   end
 
-  def do_thumb_up
+  def do_thumb_up(user_id)
     goods.create(comment_id: id, user_id: user_id)
   end
 
-  def do_thumb_down
+  def do_thumb_down(user_id)
     goods.find_by(comment_id: id, user_id: user_id)&.destroy
   end
 end

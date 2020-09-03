@@ -2,8 +2,8 @@ class CommentGoodsController < ApplicationController
   before_action :sign_in?, only: [:create, :destroy]
 
   def create
-    if @comment = current_user.comments.find_by(id: params[:comment_id])
-      @comment.do_thumb_up
+    if @comment = Comment.find_by(id: params[:comment_id])
+      @comment.do_thumb_up(current_user.id)
       # 最新のgood_countを@commentに反映させるため
       @comment.reload
     end
@@ -15,8 +15,8 @@ class CommentGoodsController < ApplicationController
   end
 
   def destroy
-    if @comment = current_user.comments.find_by(id: params[:comment_id])
-      @comment.do_thumb_down
+    if @comment = Comment.find_by(id: params[:comment_id])
+      @comment.do_thumb_down(current_user.id)
       # 最新のgood_countを@commentに反映させるため
       @comment.reload
     end
