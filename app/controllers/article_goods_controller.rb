@@ -2,8 +2,8 @@ class ArticleGoodsController < ApplicationController
   before_action :sign_in?, only: [:create, :destroy]
 
   def create
-    if @article = current_user.articles.find_by(id: params[:article_id])
-      @article.do_thumb_up
+    if @article = Article.find_by(id: params[:article_id])
+      @article.do_thumb_up(current_user.id)
       # 最新のgood_countを@articleに反映させるため
       @article.reload
     end
@@ -18,8 +18,8 @@ class ArticleGoodsController < ApplicationController
   end
 
   def destroy
-    if @article = current_user.articles.find_by(id: params[:article_id])
-      @article.do_thumb_down
+    if @article = Article.find_by(id: params[:article_id])
+      @article.do_thumb_down(current_user.id)
       # 最新のgood_countを@articleに反映させるため
       @article.reload
     end

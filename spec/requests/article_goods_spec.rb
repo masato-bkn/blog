@@ -39,11 +39,34 @@ RSpec.describe ArticleGoodsController, type: :request do
       end
 
       context '記事が存在する場合' do
+        let :article1 do
+          create(:article1)
+        end
+
         it 'いいねできていること' do
           expect do
             article1
             subject
           end.to change(ArticleGood, :count).by(1)
+        end
+
+        context '別ユーザの記事にいいねする場合' do
+          let :params do
+            {
+              user_id: user1.id,
+              article_id: article1.id
+            }
+          end
+
+          let :article1 do
+            create(:article1, user: create(:user2))
+          end
+
+          it 'いいねできていること' do
+            expect do
+              subject
+            end.to change(ArticleGood, :count).by(1)
+          end
         end
       end
 
@@ -82,24 +105,54 @@ RSpec.describe ArticleGoodsController, type: :request do
     end
 
     let :article1 do
-      create(:article1)
+      create(:article1, user: create(:user2))
     end
 
     let :good1 do
-      create(:article_good1)
+      create(:article_good1, user: user1, article: article1)
     end
 
     context 'いいねが存在する場合' do
       before :each do
-        sign_in create(:user1)
-        article1
+        sign_in user1
         good1
       end
 
-      it 'いいねで削除できていること' do
+      let :user1 do
+        create(:user1)
+      end
+
+      it 'いいねを削除できていること' do
         expect do
           subject
         end.to change(ArticleGood, :count).by(-1)
+      end
+
+      context '別ユーザの記事のいいねの場合' do
+        let :params do
+          {
+            user_id: user1.id,
+            article_id: article1.id
+          }
+        end
+
+        let :user1 do
+          create(:user1)
+        end
+
+        let :article1 do
+          create(:article1, user: create(:user2))
+        end
+
+        let :good1 do
+          create(:article_good1, article: article1, user: user1)
+        end
+
+        it 'いいねを削除できていること' do
+          expect do
+            subject
+          end.to change(ArticleGood, :count).by(-1)
+        end
       end
     end
 

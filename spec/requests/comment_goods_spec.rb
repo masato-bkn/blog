@@ -33,10 +33,6 @@ RSpec.describe CommentGoodsController, type: :request do
         sign_in user1
       end
 
-      after :each do
-        sign_out user1
-      end
-
       context 'コメントが存在する場合' do
         it 'いいねできていること' do
           expect do
@@ -44,6 +40,28 @@ RSpec.describe CommentGoodsController, type: :request do
             comment1
             subject
           end.to change(CommentGood, :count).by(1)
+        end
+
+        context '別ユーザのコメントの場合' do
+          let :params do
+            {
+              comment_id: comment1.id
+            }
+          end
+
+          let :comment1 do
+            create(:comment1, user: other_user, article: article1)
+          end
+
+          let :other_user do
+            create(:user2)
+          end
+
+          it 'いいねできていること' do
+            expect do
+              subject
+            end.to change(CommentGood, :count).by(1)
+          end
         end
       end
 
@@ -109,6 +127,32 @@ RSpec.describe CommentGoodsController, type: :request do
         expect do
           subject
         end.to change(CommentGood, :count).by(-1)
+      end
+
+      context '別ユーザのコメントの場合' do
+        let :params do
+          {
+            comment_id: comment1.id
+          }
+        end
+
+        let :comment1 do
+          create(:comment1, user: other_user, article: article1)
+        end
+
+        let :other_user do
+          create(:user2)
+        end
+
+        let :good do
+          create(:comment_good1, user: user1, comment: comment)
+        end
+
+        it 'いいねが削除できていること' do
+          expect do
+            subject
+          end.to change(CommentGood, :count).by(-1)
+        end
       end
     end
 
