@@ -179,41 +179,41 @@ RSpec.describe ArticlesController, type: :request do
       get edit_article_path(id: id)
     end
 
+    let :id do
+      article1&.id || 1
+    end
+
+    let :user1 do
+      create(:user1)
+    end
+
+    let :article1 do
+      create(:article1, user: user1)
+    end
+
     context 'ログインしている場合' do
       before :each do
         sign_in user1
-      end
-
-      after :each do
-        sign_out user1
-      end
-
-      let :user1 do
-        create(:user1)
-      end
-
-      let :id do
-        1
+        article1
       end
 
       context '記事が存在する場合' do
         it '200が返ること' do
-          create(:article1)
           subject
           expect(response).to have_http_status(:success)
         end
       end
 
       context '記事が存在しない場合' do
+        let :article1 do
+          nil
+        end
+
         it_behaves_like '記事の一覧画面にリダイレクトされる事'
       end
     end
 
     context 'ログインしていない場合' do
-      let :id do
-        1
-      end
-
       it_behaves_like 'ログインページにリダイレクトされる事'
     end
   end
