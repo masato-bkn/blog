@@ -19,10 +19,6 @@ RSpec.describe ArticlesController, type: :request do
     end
 
     context 'ログインしていない場合' do
-      let :user1 do
-        create(:user1)
-      end
-
       it_behaves_like 'ログインページにリダイレクトされる事'
     end
   end
@@ -43,11 +39,11 @@ RSpec.describe ArticlesController, type: :request do
     end
 
     let :title do
-      'test'
+      'test_title'
     end
 
     let :content do
-      'test'
+      'test_content'
     end
 
     context 'ログインしている場合' do
@@ -55,16 +51,12 @@ RSpec.describe ArticlesController, type: :request do
         sign_in user1
       end
 
-      after :each do
-        sign_out user1
-      end
-
       let :user1 do
         create(:user1)
       end
 
       let :id do
-        1
+        Article.last.id
       end
 
       context 'パラメータが正常な場合' do
@@ -78,27 +70,36 @@ RSpec.describe ArticlesController, type: :request do
       end
 
       context 'パラメータが不正な場合' do
-        let :title do
-          nil
+        where(:scenario, :answer, :title, :content) do
+          [
+            ['titleが空の場合', 'Articleが変化しないこと', '', 'test_content'],
+            ['titleがnilの場合', 'Articleが変化しないこと', nil, 'test_content'],
+            ['titleが51文字の場合', 'Articleが変化しないこと', 'a' * 51, 'test_content'],
+            ['titleが空の場合', 'Articleが変化しないこと', 'test_title', ''],
+            ['contentがnilの場合', 'Articleが変化しないこと', 'test_title', nil],
+            ['titleが151文字の場合', 'Articleが変化しないこと', 'test_title', 'a' * 151]
+          ]
         end
 
-        it '記事が作成されない事' do
-          expect do
-            subject
-          end.to change(Article, :count).by(0)
+        with_them do
+          context :scenario do
+            it :answer do
+              expect { subject }.to change(Article, :count).by(0)
+            end
+          end
         end
       end
     end
 
     context 'ログインしていない場合' do
       context 'パラメータが正常な場合' do
+        it_behaves_like 'ログインページにリダイレクトされる事'
+
         it '記事が作成されていない事' do
           expect do
             subject
           end.to change(Article, :count).by(0)
         end
-
-        it_behaves_like 'ログインページにリダイレクトされる事'
       end
     end
   end
