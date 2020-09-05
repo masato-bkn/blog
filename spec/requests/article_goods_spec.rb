@@ -26,7 +26,7 @@ RSpec.describe ArticleGoodsController, type: :request do
     end
 
     let :article1 do
-      create(:article1)
+      create(:article1, user: user1)
     end
 
     context 'ログインしている場合' do
@@ -40,7 +40,7 @@ RSpec.describe ArticleGoodsController, type: :request do
 
       context '記事が存在する場合' do
         let :article1 do
-          create(:article1)
+          create(:article1, user: user1)
         end
 
         it 'いいねできていること' do

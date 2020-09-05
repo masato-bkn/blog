@@ -21,7 +21,7 @@ RSpec.describe CommentGoodsController, type: :request do
     end
 
     let :article1 do
-      create(:article1)
+      create(:article1, user: user1)
     end
 
     let :comment1 do
@@ -103,8 +103,12 @@ RSpec.describe CommentGoodsController, type: :request do
       1
     end
 
+    let :user1 do
+      create(:user1)
+    end
+
     let :article1 do
-      create(:article1)
+      create(:article1, user: user1)
     end
 
     let :comment1 do
@@ -117,7 +121,7 @@ RSpec.describe CommentGoodsController, type: :request do
 
     context 'いいねが存在する場合' do
       before :each do
-        sign_in create(:user1)
+        sign_in user1
         article1
         comment1
         good1
