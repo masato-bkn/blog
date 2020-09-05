@@ -137,7 +137,7 @@ RSpec.describe ArticlesController, type: :request do
 
         context '記事に紐づくコメントが存在する場合' do
           it 'コメントが削除されていること' do
-            create(:comment1)
+            create(:comment1, user: user1, article: article1)
             expect { subject }.to change(Comment, :count).by(-1)
           end
         end
