@@ -218,7 +218,7 @@ RSpec.describe ArticlesController, type: :request do
     end
   end
 
-  describe 'PUT /articles/:id/' do
+  describe 'PUT /articles/:id' do
     subject do
       put article_path(id: id, article: params)
     end
@@ -227,62 +227,44 @@ RSpec.describe ArticlesController, type: :request do
       sign_in user1
     end
 
-    after :each do
-      sign_out user1
-    end
-
-    let :user1 do
-      create(:user1)
+    let :params do
+      {
+        title: title,
+        content: content
+      }
     end
 
     let :id do
       article1.id
     end
 
-    let :title do
-      'TEST'
-    end
-
-    let :content do
-      article1.content
-    end
-
-    let :user_id do
-      article1.user_id
-    end
-
     let :article1 do
-      create(:article1)
+      create(:article1, user: user1)
     end
 
-    let :params do
-      {
-        id: id,
-        title: title,
-        content: content,
-        user_id: user_id
-      }
+    let :user1 do
+      create(:user1)
     end
 
     context 'パラメータが正常な場合' do
+      let :title do
+        'after_title_test'
+      end
+
+      let :content do
+        'content_test'
+      end
+
       it_behaves_like '記事の詳細画面にリダイレクトされること'
 
       it '記事が更新されること' do
+        expect(Article.find_by(id: id).title).not_to eq(title)
         subject
         expect(Article.find_by(id: id).title).to eq(title)
       end
     end
 
     context 'パラメータが不正な場合' do
-      let :params do
-        {
-          id: id,
-          title: title,
-          content: content,
-          user_id: user_id
-        }
-      end
-
       where(:scenario, :answer, :target, :title, :content) do
         [
           ['titleが空の場合', 'titleが変化しないこと', :title, '', 'test'],
