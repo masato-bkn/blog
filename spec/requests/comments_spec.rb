@@ -36,6 +36,21 @@ RSpec.describe CommentsController, type: :request do
       it 'コメントが投稿できていること' do
         expect { subject }.to change(Comment, :count).by(1)
       end
+
+      context '別ユーザの記事にコメントする場合' do
+        let :article do
+          create(:article1, user: user2)
+        end
+
+        let :user2 do
+          create(:user2)
+        end
+
+        it 'コメントが自分のuser_idで投稿できていること' do
+          expect { subject }.to change(Comment, :count).by(1)
+          expect(Comment.last.user.id).to eq(user1.id)
+        end
+      end
     end
 
     context 'ログインしていない場合' do
