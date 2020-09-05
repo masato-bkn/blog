@@ -3,7 +3,8 @@ class CommentGoodsController < ApplicationController
 
   def create
     if @comment = Comment.find_by(id: params[:comment_id])
-      @comment.do_thumb_up(current_user.id)
+      @comment.goods.create(user_id: current_user.id)
+
       # 最新のgood_countを@commentに反映させるため
       @comment.reload
     end
