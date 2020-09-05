@@ -35,7 +35,7 @@ RSpec.describe CommentsController, type: :request do
     context 'ログインしている場合' do
       before :each do
         sign_in user1
-        create(:article1)
+        create(:article1, user: user1)
       end
 
       after :each do
@@ -49,8 +49,7 @@ RSpec.describe CommentsController, type: :request do
 
     context 'ログインしていない場合' do
       before :each do
-        user1
-        create(:article1)
+        create(:article1, user: user1)
       end
 
       it 'コメントが投稿できていること' do
@@ -96,7 +95,7 @@ RSpec.describe CommentsController, type: :request do
     context 'ログインしている場合' do
       before :each do
         sign_in user1
-        create(:article1)
+        create(:article1, user: user1)
         create(:comment1)
       end
 
@@ -136,7 +135,7 @@ RSpec.describe CommentsController, type: :request do
     context 'ログインしていない場合' do
       before :each do
         user1
-        create(:article1)
+        create(:article1, user: user1)
         create(:comment1)
       end
 
