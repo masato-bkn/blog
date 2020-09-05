@@ -19,10 +19,6 @@ RSpec.describe ArticlesController, type: :request do
     end
 
     context 'ログインしていない場合' do
-      let :user1 do
-        create(:user1)
-      end
-
       it_behaves_like 'ログインページにリダイレクトされる事'
     end
   end
@@ -43,11 +39,11 @@ RSpec.describe ArticlesController, type: :request do
     end
 
     let :title do
-      'test'
+      'test_title'
     end
 
     let :content do
-      'test'
+      'test_content'
     end
 
     context 'ログインしている場合' do
@@ -55,16 +51,12 @@ RSpec.describe ArticlesController, type: :request do
         sign_in user1
       end
 
-      after :each do
-        sign_out user1
-      end
-
       let :user1 do
         create(:user1)
       end
 
       let :id do
-        1
+        Article.last.id
       end
 
       context 'パラメータが正常な場合' do
@@ -78,27 +70,36 @@ RSpec.describe ArticlesController, type: :request do
       end
 
       context 'パラメータが不正な場合' do
-        let :title do
-          nil
+        where(:scenario, :answer, :title, :content) do
+          [
+            ['titleが空の場合', 'Articleが変化しないこと', '', 'test_content'],
+            ['titleがnilの場合', 'Articleが変化しないこと', nil, 'test_content'],
+            ['titleが51文字の場合', 'Articleが変化しないこと', 'a' * 51, 'test_content'],
+            ['titleが空の場合', 'Articleが変化しないこと', 'test_title', ''],
+            ['contentがnilの場合', 'Articleが変化しないこと', 'test_title', nil],
+            ['titleが151文字の場合', 'Articleが変化しないこと', 'test_title', 'a' * 151]
+          ]
         end
 
-        it '記事が作成されない事' do
-          expect do
-            subject
-          end.to change(Article, :count).by(0)
+        with_them do
+          context :scenario do
+            it :answer do
+              expect { subject }.to change(Article, :count).by(0)
+            end
+          end
         end
       end
     end
 
     context 'ログインしていない場合' do
       context 'パラメータが正常な場合' do
+        it_behaves_like 'ログインページにリダイレクトされる事'
+
         it '記事が作成されていない事' do
           expect do
             subject
           end.to change(Article, :count).by(0)
         end
-
-        it_behaves_like 'ログインページにリダイレクトされる事'
       end
     end
   end
@@ -108,7 +109,7 @@ RSpec.describe ArticlesController, type: :request do
     end
 
     let :id do
-      1
+      article1&.id || 1
     end
 
     let :user1 do
@@ -120,62 +121,50 @@ RSpec.describe ArticlesController, type: :request do
     end
 
     let :article1 do
-      create(:article1)
+      create(:article1, user: user1)
     end
 
     context 'ログインしている場合' do
       before :each do
         sign_in user1
-      end
-
-      after :each do
-        sign_out user1
+        article1
       end
 
       context '記事が存在する場合' do
         it '削除されている事' do
-          article1
           expect { subject }.to change(Article, :count).by(-1)
         end
 
         context '記事に紐づくコメントが存在する場合' do
-          let :comment1 do
-            create(:comment1)
-          end
           it 'コメントが削除されていること' do
-            article1
-            comment1
+            create(:comment1)
             expect { subject }.to change(Comment, :count).by(-1)
           end
         end
 
         context '記事に紐づくいいねが存在する場合' do
-          let :good1 do
-            create(:article_good1)
-          end
           it 'いいねが削除されていること' do
-            article1
-            good1
+            create(:article_good1)
             expect { subject }.to change(ArticleGood, :count).by(-1)
           end
         end
-      end
 
-      context '自分の記事ではない場合' do
-        before :each do
-          sign_in user2
-        end
+        context '自分の記事ではない場合' do
+          before :each do
+            sign_in create(:user2)
+          end
 
-        before :each do
-          sign_out user2
-        end
-
-        it '記事を削除できないこと' do
-          expect { subject }.to change(Article, :count).by(0)
+          it '記事を削除できないこと' do
+            expect { subject }.to change(Article, :count).by(0)
+          end
         end
       end
 
       context '記事が存在しない場合' do
+        let :article1 do
+          nil
+        end
+
         it_behaves_like '記事の一覧画面にリダイレクトされる事'
       end
     end
@@ -190,46 +179,46 @@ RSpec.describe ArticlesController, type: :request do
       get edit_article_path(id: id)
     end
 
+    let :id do
+      article1&.id || 1
+    end
+
+    let :user1 do
+      create(:user1)
+    end
+
+    let :article1 do
+      create(:article1, user: user1)
+    end
+
     context 'ログインしている場合' do
       before :each do
         sign_in user1
-      end
-
-      after :each do
-        sign_out user1
-      end
-
-      let :user1 do
-        create(:user1)
-      end
-
-      let :id do
-        1
+        article1
       end
 
       context '記事が存在する場合' do
         it '200が返ること' do
-          create(:article1)
           subject
           expect(response).to have_http_status(:success)
         end
       end
 
       context '記事が存在しない場合' do
+        let :article1 do
+          nil
+        end
+
         it_behaves_like '記事の一覧画面にリダイレクトされる事'
       end
     end
 
     context 'ログインしていない場合' do
-      let :id do
-        1
-      end
-
       it_behaves_like 'ログインページにリダイレクトされる事'
     end
   end
 
-  describe 'PUT /articles/:id/' do
+  describe 'PUT /articles/:id' do
     subject do
       put article_path(id: id, article: params)
     end
@@ -238,62 +227,44 @@ RSpec.describe ArticlesController, type: :request do
       sign_in user1
     end
 
-    after :each do
-      sign_out user1
-    end
-
-    let :user1 do
-      create(:user1)
+    let :params do
+      {
+        title: title,
+        content: content
+      }
     end
 
     let :id do
       article1.id
     end
 
-    let :title do
-      'TEST'
-    end
-
-    let :content do
-      article1.content
-    end
-
-    let :user_id do
-      article1.user_id
-    end
-
     let :article1 do
-      create(:article1)
+      create(:article1, user: user1)
     end
 
-    let :params do
-      {
-        id: id,
-        title: title,
-        content: content,
-        user_id: user_id
-      }
+    let :user1 do
+      create(:user1)
     end
 
     context 'パラメータが正常な場合' do
+      let :title do
+        'after_title_test'
+      end
+
+      let :content do
+        'content_test'
+      end
+
       it_behaves_like '記事の詳細画面にリダイレクトされること'
 
       it '記事が更新されること' do
+        expect(Article.find_by(id: id).title).not_to eq(title)
         subject
         expect(Article.find_by(id: id).title).to eq(title)
       end
     end
 
     context 'パラメータが不正な場合' do
-      let :params do
-        {
-          id: id,
-          title: title,
-          content: content,
-          user_id: user_id
-        }
-      end
-
       where(:scenario, :answer, :target, :title, :content) do
         [
           ['titleが空の場合', 'titleが変化しないこと', :title, '', 'test'],
