@@ -10,8 +10,8 @@ RSpec.describe CommentsController, type: :request do
       {
         comment: {
           text: text,
-          article_id: article_id,
-          user_id: user_id
+          article_id: article1.id,
+          user_id: user1.id
         }
       }
     end
@@ -20,12 +20,8 @@ RSpec.describe CommentsController, type: :request do
       'テスト'
     end
 
-    let :article_id do
-      1
-    end
-
-    let :user_id do
-      1
+    let :article1 do
+      create(:article1, user: user1)
     end
 
     let :user1 do
@@ -35,11 +31,6 @@ RSpec.describe CommentsController, type: :request do
     context 'ログインしている場合' do
       before :each do
         sign_in user1
-        create(:article1, user: user1)
-      end
-
-      after :each do
-        sign_out user1
       end
 
       it 'コメントが投稿できていること' do
@@ -48,27 +39,23 @@ RSpec.describe CommentsController, type: :request do
     end
 
     context 'ログインしていない場合' do
-      before :each do
-        create(:article1, user: user1)
-      end
-
-      it 'コメントが投稿できていること' do
+      it 'コメントが投稿できていないこと' do
         expect { subject }.to change(Comment, :count).by(0)
       end
     end
 
     context 'パラメータが不正な場合' do
-      where(:scenario, :answer, :text, :article_id) do
+      where(:scenario, :text, :article_id) do
         [
-          ['textが空の場合', 'Commentが変化しないこと', '', 1],
-          ['textが151文字の場合', 'Commentが変化しないこと', 'a' * 151, 1],
-          ['記事が存在しない場合', 'Commentが変化しないこと', text, 999]
+          ['textが空の場合', '', 1],
+          ['textが151文字の場合', 'a' * 151, 1],
+          ['記事が存在しない場合', text, 999]
         ]
       end
 
       with_them do
         context :scenario do
-          it :answer do
+          it 'Commentが変化しないこと' do
             expect { subject }.to change(Comment, :count).by(0)
           end
         end
