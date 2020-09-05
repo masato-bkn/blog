@@ -109,7 +109,7 @@ RSpec.describe ArticlesController, type: :request do
     end
 
     let :id do
-      1
+      article1&.id || 1
     end
 
     let :user1 do
@@ -121,62 +121,50 @@ RSpec.describe ArticlesController, type: :request do
     end
 
     let :article1 do
-      create(:article1)
+      create(:article1, user: user1)
     end
 
     context 'ログインしている場合' do
       before :each do
         sign_in user1
-      end
-
-      after :each do
-        sign_out user1
+        article1
       end
 
       context '記事が存在する場合' do
         it '削除されている事' do
-          article1
           expect { subject }.to change(Article, :count).by(-1)
         end
 
         context '記事に紐づくコメントが存在する場合' do
-          let :comment1 do
-            create(:comment1)
-          end
           it 'コメントが削除されていること' do
-            article1
-            comment1
+            create(:comment1)
             expect { subject }.to change(Comment, :count).by(-1)
           end
         end
 
         context '記事に紐づくいいねが存在する場合' do
-          let :good1 do
-            create(:article_good1)
-          end
           it 'いいねが削除されていること' do
-            article1
-            good1
+            create(:article_good1)
             expect { subject }.to change(ArticleGood, :count).by(-1)
           end
         end
-      end
 
-      context '自分の記事ではない場合' do
-        before :each do
-          sign_in user2
-        end
+        context '自分の記事ではない場合' do
+          before :each do
+            sign_in create(:user2)
+          end
 
-        before :each do
-          sign_out user2
-        end
-
-        it '記事を削除できないこと' do
-          expect { subject }.to change(Article, :count).by(0)
+          it '記事を削除できないこと' do
+            expect { subject }.to change(Article, :count).by(0)
+          end
         end
       end
 
       context '記事が存在しない場合' do
+        let :article1 do
+          nil
+        end
+
         it_behaves_like '記事の一覧画面にリダイレクトされる事'
       end
     end
