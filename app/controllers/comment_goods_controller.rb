@@ -17,7 +17,8 @@ class CommentGoodsController < ApplicationController
 
   def destroy
     if @comment = Comment.find_by(id: params[:comment_id])
-      @comment.do_thumb_down(current_user.id)
+      @comment.goods.find_by(user_id: current_user.id)&.destroy
+
       # 最新のgood_countを@commentに反映させるため
       @comment.reload
     end
