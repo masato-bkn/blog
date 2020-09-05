@@ -9,9 +9,6 @@ class ArticleGoodsController < ApplicationController
       @article.reload
     end
 
-    # 一覧ページからいいねされた場合にviewの描画に必要
-    @articles = Article.includes(comments: :user).all unless request.referer&.include?('articles/')
-
     respond_to do |format|
       format.html { redirect_to request.referrer || root_path }
       format.js { render 'articles/goods/destroy.js.erb' }
@@ -24,9 +21,6 @@ class ArticleGoodsController < ApplicationController
       # 最新のgood_countを@articleに反映させるため
       @article.reload
     end
-
-    # 一覧ページからいいねされた場合にviewの描画に必要
-    @articles = Article.includes(comments: :user).all unless request.referer&.include?('articles/')
 
     respond_to do |format|
       format.html { redirect_to request.referrer || root_path }
