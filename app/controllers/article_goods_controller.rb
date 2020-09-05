@@ -3,7 +3,8 @@ class ArticleGoodsController < ApplicationController
 
   def create
     if @article = Article.find_by(id: params[:article_id])
-      @article.do_thumb_up(current_user.id)
+      @article.goods.create(user_id: current_user.id)
+
       # 最新のgood_countを@articleに反映させるため
       @article.reload
     end
