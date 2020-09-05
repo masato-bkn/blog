@@ -17,7 +17,8 @@ class ArticleGoodsController < ApplicationController
 
   def destroy
     if @article = Article.find_by(id: params[:article_id])
-      @article.do_thumb_down(current_user.id)
+      @article.goods.find_by(user_id: current_user.id)&.destroy
+
       # 最新のgood_countを@articleに反映させるため
       @article.reload
     end
