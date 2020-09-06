@@ -238,6 +238,14 @@ RSpec.describe ArticlesController, type: :request do
       article1.id
     end
 
+    let :title do
+      article1.title
+    end
+
+    let :content do
+      article1.content
+    end
+
     let :article1 do
       create(:article1, user: user1)
     end
@@ -246,41 +254,66 @@ RSpec.describe ArticlesController, type: :request do
       create(:user1)
     end
 
-    context 'パラメータが正常な場合' do
+    context 'titleについて' do
       let :title do
-        'after_title_test'
-      end
-
-      let :content do
-        'content_test'
+        'new_title_test'
       end
 
       it_behaves_like '記事の詳細画面にリダイレクトされること'
 
       it '記事が更新されること' do
-        expect(Article.find_by(id: id).title).not_to eq(title)
         subject
         expect(Article.find_by(id: id).title).to eq(title)
       end
     end
 
-    context 'パラメータが不正な場合' do
-      where(:scenario, :answer, :target, :title, :content) do
-        [
-          ['titleが空の場合', 'titleが変化しないこと', :title, '', 'test'],
-          ['titleが51文字以上の場合', 'titleが変化しないこと', :title, 'a' * 51, 'test'],
-          ['titleがnullの場合', 'titleが変化しないこと', :title, nil, 'test'],
-          ['contentが空の場合', 'titleが変化しないこと', :content, 'test', ''],
-          ['contentが151文字以上の場合', 'titleが変化しないこと', :content, 'test', 'a' * 151],
-          ['contentがnullの場合', 'titleが変化しないこと', :content, 'test', nil]
-        ]
+    context 'contentについて' do
+      let :content do
+        'new_content_test'
       end
 
-      with_them do
-        context :scenario do
-          it :answer do
-            article1
-            expect { subject }.not_to change { Article.find(id).send(target) }.from(Article.find(id).send(target))
+      it_behaves_like '記事の詳細画面にリダイレクトされること'
+
+      it '記事が更新されること' do
+        subject
+        expect(Article.find_by(id: id).content).to eq(content)
+      end
+    end
+
+    context 'パラメータが不正な場合' do
+      context 'titleについて' do
+        where(:scenario, :title) do
+          [
+            ['titleが空の場合', ''],
+            ['titleが51文字以上の場合', 'a' * 51],
+            ['titleがnullの場合', nil]
+          ]
+        end
+
+        with_them do
+          context :scenario do
+            it 'titleが更新されないこと' do
+              subject
+              expect(Article.find(id).title).not_to be(title)
+            end
+          end
+        end
+      end
+      context 'contentについて' do
+        where(:scenario, :content) do
+          [
+            ['contentが空の場合', ''],
+            ['contentが51文字以上の場合', 'a' * 51],
+            ['contentがnullの場合', nil]
+          ]
+        end
+
+        with_them do
+          context :scenario do
+            it 'contentが更新されないこと' do
+              subject
+              expect(Article.find(id).content).not_to be(content)
+            end
           end
         end
       end
