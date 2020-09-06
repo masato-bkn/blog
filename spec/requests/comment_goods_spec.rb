@@ -25,7 +25,7 @@ RSpec.describe CommentGoodsController, type: :request do
     end
 
     let :comment1 do
-      create(:comment1)
+      create(:comment1, user: user1, article: article1)
     end
 
     context 'ログインしている場合' do
@@ -112,7 +112,7 @@ RSpec.describe CommentGoodsController, type: :request do
     end
 
     let :comment1 do
-      create(:comment1)
+      create(:comment1, user: user1, article: article1)
     end
 
     let :good1 do

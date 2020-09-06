@@ -107,6 +107,7 @@ GEM
       activesupport (>= 4.2)
       after_commit_action (~> 1.0)
     crass (1.0.6)
+    database_cleaner (1.8.5)
     devise (4.7.2)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -460,6 +461,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   carrierwave (= 0.10.0)
   counter_culture
+  database_cleaner
   devise
   factory_bot_rails
   fog (= 1.36.0)
