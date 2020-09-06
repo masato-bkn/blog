@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ArticleGoodsController, type: :request do
+RSpec.describe UsersController, type: :request do
   shared_examples 'ログインページにリダイレクトされる事' do
     it { is_expected.to redirect_to(new_user_session_path) }
   end
@@ -16,7 +16,7 @@ RSpec.describe ArticleGoodsController, type: :request do
     end
 
     let :id do
-      1
+      user1.id
     end
 
     let :user1 do
@@ -47,7 +47,7 @@ RSpec.describe ArticleGoodsController, type: :request do
     end
 
     let :id do
-      1
+      user1.id
     end
 
     let :user1 do
@@ -63,10 +63,6 @@ RSpec.describe ArticleGoodsController, type: :request do
     end
 
     context 'ログインしていない場合' do
-      before :each do
-        user1
-      end
-
       it_behaves_like 'ログインページにリダイレクトされる事'
     end
   end
@@ -79,7 +75,8 @@ RSpec.describe ArticleGoodsController, type: :request do
     let :params do
       {
         id: id,
-        name: name
+        name: name,
+        email: email
       }
     end
 
@@ -88,15 +85,15 @@ RSpec.describe ArticleGoodsController, type: :request do
     end
 
     let :id do
-      1
+      user1.id
     end
 
     let :name do
-      'hoge'
+      user1.name
     end
 
     let :email do
-      'test1@gmail.com'
+      user1.email
     end
 
     context 'ログインしている場合' do
@@ -105,69 +102,53 @@ RSpec.describe ArticleGoodsController, type: :request do
       end
 
       context 'パラメータが正常な場合' do
-        where(:scenario, :answer, :target, :name, :email) do
-          [
-            ['nameが入力されている場合', 'nameが更新できること', :name, 'new-test', 'test1@gmail.com'],
-            ['emailが入力されている場合', 'emailが更新できること', :email, 'test', 'new-test1@gmail.com']
-          ]
-        end
+        context 'nameについて' do
+          let :name do
+            'new_test_name'
+          end
 
-        before :each do
-          sign_in user1
+          it '更新されていること' do
+            subject
+            expect(User.find(id).name).to(eq(name))
+          end
         end
+        context 'emailについて' do
+          let :email do
+            'new_test_email@gmail.com'
+          end
 
-        let :params do
-          {
-            id: id,
-            name: name,
-            email: email
-          }
-        end
-
-        with_them do
-          context :scenario do
-            it :answer do
-              expect { subject }.to change { User.find(id).send(target) }.from(User.find(id).send(target))
-            end
+          it '更新されていること' do
+            subject
+            expect(User.find(id).email).to(eq(email))
           end
         end
       end
 
       context 'パラメータが不正な場合' do
-        where(:scenario, :answer, :target, :name, :email) do
-          [
-            ['nameが空の場合', '更新できないこと', :name, '', 'test1@gmail.com'],
-            ['emailが空の場合', '更新できないこと', :email, 'test', '']
-          ]
-        end
+        context 'nameについて' do
+          let :name do
+            'new_test_name'
+          end
 
-        before :each do
-          sign_in user1
+          it '更新されていないこと' do
+            subject
+            expect(User.find(id).name).not_to(be(name))
+          end
         end
+        context 'emailについて' do
+          let :email do
+            'new_test_email@gmail.com'
+          end
 
-        let :params do
-          {
-            id: id,
-            name: name,
-            email: email
-          }
-        end
-
-        with_them do
-          context :scenario do
-            it :answer do
-              expect { subject }.not_to change { User.find(id).send(target) }.from(User.find(id).send(target))
-            end
+          it '更新されていないこと' do
+            subject
+            expect(User.find(id).email).not_to(be(email))
           end
         end
       end
     end
 
     context 'ログインしていない場合' do
-      before :each do
-        user1
-      end
-
       it_behaves_like 'ログインページにリダイレクトされる事'
     end
   end
