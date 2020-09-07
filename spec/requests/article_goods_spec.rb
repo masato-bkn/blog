@@ -14,11 +14,11 @@ RSpec.describe ArticleGoodsController, type: :request do
     end
 
     let :user_id do
-      1
+      user1.id
     end
 
     let :article_id do
-      1
+      article1&.id || 1
     end
 
     let :user1 do
@@ -32,10 +32,6 @@ RSpec.describe ArticleGoodsController, type: :request do
     context 'ログインしている場合' do
       before :each do
         sign_in user1
-      end
-
-      after :each do
-        sign_out user1
       end
 
       context '記事が存在する場合' do
@@ -71,6 +67,10 @@ RSpec.describe ArticleGoodsController, type: :request do
       end
 
       context '記事が存在しない場合' do
+        let :article1 do
+          nil
+        end
+
         it 'いいねできないこと' do
           expect do
             subject
@@ -82,8 +82,6 @@ RSpec.describe ArticleGoodsController, type: :request do
       context '記事が存在する場合' do
         it 'いいねできないこと' do
           expect do
-            user1
-            article1
             subject
           end.to change(ArticleGood, :count).by(0)
         end
@@ -101,25 +99,25 @@ RSpec.describe ArticleGoodsController, type: :request do
     end
 
     let :id do
-      1
+      good1.id
     end
 
     let :article1 do
-      create(:article1, user: create(:user2))
+      create(:article1, user: user1)
     end
 
     let :good1 do
       create(:article_good1, user: user1, article: article1)
     end
 
+    let :user1 do
+      create(:user1)
+    end
+
     context 'いいねが存在する場合' do
       before :each do
-        sign_in user1
         good1
-      end
-
-      let :user1 do
-        create(:user1)
+        sign_in user1
       end
 
       it 'いいねを削除できていること' do
@@ -129,23 +127,8 @@ RSpec.describe ArticleGoodsController, type: :request do
       end
 
       context '別ユーザの記事のいいねの場合' do
-        let :params do
-          {
-            user_id: user1.id,
-            article_id: article1.id
-          }
-        end
-
-        let :user1 do
-          create(:user1)
-        end
-
         let :article1 do
           create(:article1, user: create(:user2))
-        end
-
-        let :good1 do
-          create(:article_good1, article: article1, user: user1)
         end
 
         it 'いいねを削除できていること' do
@@ -158,7 +141,7 @@ RSpec.describe ArticleGoodsController, type: :request do
 
     context 'いいねが存在しない場合' do
       before :each do
-        sign_in create(:user1)
+        sign_in user1
       end
 
       it 'Goodが変化しないこと' do
