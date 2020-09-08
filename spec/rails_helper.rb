@@ -44,6 +44,9 @@ RSpec.configure do |config|
   config.before(:all) do
     DatabaseCleaner.clean_with(:truncation)
   end
+  config.after(:all) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
