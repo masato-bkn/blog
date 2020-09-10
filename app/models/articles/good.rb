@@ -1,4 +1,6 @@
 class Articles::Good < ApplicationRecord
+  self.table_name = 'article_goods'
+
   validates :user_id, presence: true
   validates :article_id, presence: true
 
