@@ -8,8 +8,8 @@ RSpec.describe Articles::GoodsController, type: :request do
 
     let :params do
       {
-          user_id: user_id,
-          article_id: article_id
+        user_id: user_id,
+        article_id: article_id
       }
     end
 
@@ -49,8 +49,8 @@ RSpec.describe Articles::GoodsController, type: :request do
         context '別ユーザの記事にいいねする場合' do
           let :params do
             {
-                user_id: user1.id,
-                article_id: article1.id
+              user_id: user1.id,
+              article_id: article1.id
             }
           end
 
