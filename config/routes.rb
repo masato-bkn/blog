@@ -3,7 +3,10 @@ Rails.application.routes.draw do
 
   root 'home#top'
   resources :users
-  resources :articles
+  resources :articles do
+    resources :goods
+  end
+  # TODO リファクタ後に削除する
   resources :article_goods, only: [:create, :destroy]
   resources :comments, only: [:create, :destroy]
   resources :comment_goods, only: [:create, :destroy]
