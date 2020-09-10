@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ArticleGood, type: :model do
+RSpec.describe Articles::Good, type: :model do
   let :user1 do
     build(:user1)
   end

@@ -1,5 +1,5 @@
 <div id="ungood-<%= article.id %>">
-  <%= form_with(model: current_user.article_goods.find_by(article_id: article.id),
+  <%= form_with(url: article_good_path(current_user.article_goods.find_by(article_id: article.id).id, article_id: article.id),
                 method: :delete,
                 remote: true
       ) do |f| %>

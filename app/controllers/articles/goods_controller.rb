@@ -1,4 +1,4 @@
-class ArticleGoodsController < ApplicationController
+class Articles::GoodsController < ApplicationController
   before_action :sign_in?, only: [:create, :destroy]
 
   def create
