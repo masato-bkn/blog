@@ -1,5 +1,5 @@
 <div id="ungood-<%= comment.id %>">
-  <%= form_with(model: current_user.comment_goods.find_by(comment_id: comment.id),
+  <%= form_with(url: comment_good_path(comment_id: comment.id, id: current_user.comment_goods.find_by(comment_id: comment.id).id),
                 method: :delete,
                 remote: true
       ) do |f| %>

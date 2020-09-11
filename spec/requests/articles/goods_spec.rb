@@ -43,7 +43,7 @@ RSpec.describe Articles::GoodsController, type: :request do
           expect do
             article1
             subject
-          end.to change(ArticleGood, :count).by(1)
+          end.to change(Articles::Good, :count).by(1)
         end
 
         context '別ユーザの記事にいいねする場合' do
@@ -61,7 +61,7 @@ RSpec.describe Articles::GoodsController, type: :request do
           it 'いいねできていること' do
             expect do
               subject
-            end.to change(ArticleGood, :count).by(1)
+            end.to change(Articles::Good, :count).by(1)
           end
         end
       end
@@ -74,7 +74,7 @@ RSpec.describe Articles::GoodsController, type: :request do
         it 'いいねできないこと' do
           expect do
             subject
-          end.to change(ArticleGood, :count).by(0)
+          end.to change(Articles::Good, :count).by(0)
         end
       end
     end
@@ -83,7 +83,7 @@ RSpec.describe Articles::GoodsController, type: :request do
         it 'いいねできないこと' do
           expect do
             subject
-          end.to change(ArticleGood, :count).by(0)
+          end.to change(Articles::Good, :count).by(0)
         end
 
         it 'ログインページにリダイレクトされること' do
@@ -123,7 +123,7 @@ RSpec.describe Articles::GoodsController, type: :request do
       it 'いいねを削除できていること' do
         expect do
           subject
-        end.to change(ArticleGood, :count).by(-1)
+        end.to change(Articles::Good, :count).by(-1)
       end
 
       context '別ユーザの記事のいいねの場合' do
@@ -134,7 +134,7 @@ RSpec.describe Articles::GoodsController, type: :request do
         it 'いいねを削除できていること' do
           expect do
             subject
-          end.to change(ArticleGood, :count).by(-1)
+          end.to change(Articles::Good, :count).by(-1)
         end
       end
     end
@@ -147,7 +147,7 @@ RSpec.describe Articles::GoodsController, type: :request do
       it 'Goodが変化しないこと' do
         expect do
           subject
-        end.to change(ArticleGood, :count).by(0)
+        end.to change(Articles::Good, :count).by(0)
       end
     end
   end

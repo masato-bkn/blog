@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :articles do
     resources :goods, only: [:create, :destroy], controller: 'articles/goods'
   end
-  resources :comments, only: [:create, :destroy]
-  resources :comment_goods, only: [:create, :destroy]
+  resources :comments, only: [:create, :destroy] do
+    resources :goods, only: [:create, :destroy], controller: 'comments/goods'
+  end
 end

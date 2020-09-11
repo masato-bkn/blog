@@ -1,4 +1,6 @@
-class CommentGood < ApplicationRecord
+class Comments::Good < ApplicationRecord
+  self.table_name = 'comment_goods'
+
   validates :user_id, presence: true
   validates :comment_id, presence: true
 

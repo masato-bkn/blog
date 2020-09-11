@@ -1,4 +1,4 @@
-class CommentGoodsController < ApplicationController
+class Comments::GoodsController < ApplicationController
   before_action :sign_in?, only: [:create, :destroy]
 
   def create

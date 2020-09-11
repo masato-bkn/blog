@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CommentGoodsController, type: :request do
+RSpec.describe Comments::GoodsController, type: :request do
   describe 'POST /comments_goods' do
     subject do
       post comment_goods_path(params)
@@ -39,7 +39,7 @@ RSpec.describe CommentGoodsController, type: :request do
             article1
             comment1
             subject
-          end.to change(CommentGood, :count).by(1)
+          end.to change(Comments::Good, :count).by(1)
         end
 
         context '別ユーザのコメントの場合' do
@@ -60,7 +60,7 @@ RSpec.describe CommentGoodsController, type: :request do
           it 'いいねできていること' do
             expect do
               subject
-            end.to change(CommentGood, :count).by(1)
+            end.to change(Comments::Good, :count).by(1)
           end
         end
       end
@@ -69,7 +69,7 @@ RSpec.describe CommentGoodsController, type: :request do
         it 'いいねできないこと' do
           expect do
             subject
-          end.to change(CommentGood, :count).by(0)
+          end.to change(Comments::Good, :count).by(0)
         end
       end
     end
@@ -81,7 +81,7 @@ RSpec.describe CommentGoodsController, type: :request do
             article1
             comment1
             subject
-          end.to change(CommentGood, :count).by(0)
+          end.to change(Comments::Good, :count).by(0)
         end
 
         it 'ログインページにリダイレクトされること' do
@@ -130,7 +130,7 @@ RSpec.describe CommentGoodsController, type: :request do
       it 'いいねで削除できていること' do
         expect do
           subject
-        end.to change(CommentGood, :count).by(-1)
+        end.to change(Comments::Good, :count).by(-1)
       end
 
       context '別ユーザのコメントの場合' do
@@ -155,7 +155,7 @@ RSpec.describe CommentGoodsController, type: :request do
         it 'いいねが削除できていること' do
           expect do
             subject
-          end.to change(CommentGood, :count).by(-1)
+          end.to change(Comments::Good, :count).by(-1)
         end
       end
     end
@@ -168,7 +168,7 @@ RSpec.describe CommentGoodsController, type: :request do
       it 'Goodが変化しないこと' do
         expect do
           subject
-        end.to change(CommentGood, :count).by(0)
+        end.to change(Comments::Good, :count).by(0)
       end
     end
   end

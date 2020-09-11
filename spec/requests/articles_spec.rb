@@ -145,7 +145,7 @@ RSpec.describe ArticlesController, type: :request do
         context '記事に紐づくいいねが存在する場合' do
           it 'いいねが削除されていること' do
             create(:article_good1, user: user1, article: article1)
-            expect { subject }.to change(ArticleGood, :count).by(-1)
+            expect { subject }.to change(Articles::Good, :count).by(-1)
           end
         end
 
