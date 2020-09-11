@@ -9,9 +9,9 @@ class User < ApplicationRecord
   validate :picture_size
 
   has_many :articles
-  has_many :article_goods
+  has_many :article_goods, class_name: 'Articles::Good'
   has_many :comments
-  has_many :comment_goods
+  has_many :comment_goods, class_name: 'Comments::Good'
 
   private
 
