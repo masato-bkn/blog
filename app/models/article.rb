@@ -4,7 +4,7 @@ class Article < ApplicationRecord
   validates :content, presence: true, length: { maximum: 150 }
 
   belongs_to :user
-  has_many :goods, dependent: :destroy, class_name: 'ArticleGood'
+  has_many :goods, dependent: :destroy, class_name: 'Articles::Good'
   has_many :comments, dependent: :destroy
 
   default_scope -> { order(created_at: :desc) }
