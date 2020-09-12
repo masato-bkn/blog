@@ -4,15 +4,20 @@ class CommentsController < ApplicationController
 
   def create
     @article = Article.find_by(id: comment_params[:article_id])
-    @comments = @article.comments
+    @comments = @article.comments.build(comment_params)
 
-    @comments.build(comment_params).save
+    flash[:success] = 'コメントが投稿されました' if @comments.save
 
     redirect_to request.referer || root_path
   end
 
   def destroy
-    current_user.comments.find_by(params[:id]).destroy!
+    if current_user.comments.find_by(params[:id]).destroy
+      flash[:success] = 'コメントを削除しました'
+    else
+      flash[:danger] = 'コメントの削除に失敗しました'
+    end
+
     redirect_to request.referer || root_path
   end
 
