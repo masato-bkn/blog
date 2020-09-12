@@ -12,7 +12,9 @@ class UsersController < ApplicationController
   def update
     @user = current_user
     @articles = @user.articles
+
     if @user.update(user_param)
+      flash[:success] = 'ユーザ情報を更新しました'
       render 'show'
     else
       render 'edit'

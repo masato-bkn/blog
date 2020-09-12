@@ -7,8 +7,9 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = current_user.articles.new(article_param)
+    @article = current_user.articles.build(article_param)
     if @article.save
+      flash[:success] = '記事が投稿されました'
       redirect_to article_url(id: @article.id)
     else
       render 'new'
@@ -32,9 +33,10 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    render 'edit' unless @article = current_user.articles.find_by(id: params[:id])
+    @article = current_user.articles.find_by(id: params[:id])
 
     if @article.update(article_param)
+      flash[:success] = '記事を更新しました'
       redirect_to @article
     else
       render 'edit'
@@ -42,8 +44,10 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    if article = current_user.articles.find_by(id: params[:id])
-      article.destroy!
+    if current_user.articles.find_by(id: params[:id]).destroy
+      flash[:success] = '記事を削除しました'
+    else
+      flash[:danger] = '記事の削除に失敗しました'
     end
     redirect_to root_path
   end
