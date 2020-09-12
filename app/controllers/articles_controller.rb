@@ -27,7 +27,7 @@ class ArticlesController < ApplicationController
     if @article = current_user.articles.find_by(id: params[:id])
       render 'edit'
     else
-      redirect_to articles_path
+      redirect_to root_path
     end
   end
 
@@ -55,6 +55,6 @@ class ArticlesController < ApplicationController
   end
 
   def correct_article?
-    redirect_to articles_path unless current_user_article?(params[:id])
+    redirect_to root_path unless current_user.articles.find_by(id: params[:id])
   end
 end

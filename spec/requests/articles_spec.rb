@@ -5,8 +5,8 @@ RSpec.describe ArticlesController, type: :request do
     it { is_expected.to redirect_to(new_user_session_path) }
   end
 
-  shared_examples '記事の一覧画面にリダイレクトされる事' do
-    it { is_expected.to redirect_to(articles_path) }
+  shared_examples 'topページにリダイレクトされる事' do
+    it { is_expected.to redirect_to(root_path) }
   end
 
   shared_examples '記事の詳細画面にリダイレクトされること' do
@@ -165,7 +165,7 @@ RSpec.describe ArticlesController, type: :request do
           nil
         end
 
-        it_behaves_like '記事の一覧画面にリダイレクトされる事'
+        it_behaves_like 'topページにリダイレクトされる事'
       end
     end
 
@@ -209,7 +209,7 @@ RSpec.describe ArticlesController, type: :request do
           nil
         end
 
-        it_behaves_like '記事の一覧画面にリダイレクトされる事'
+        it_behaves_like 'topページにリダイレクトされる事'
       end
     end
 

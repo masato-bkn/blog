@@ -23,6 +23,6 @@ class CommentsController < ApplicationController
   end
 
   def correct_comment?
-    redirect_to articles_path unless current_user_comment?(params[:id])
+    redirect_to root_path unless current_user.comments.find_by(id: params[:id])
   end
 end
