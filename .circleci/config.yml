@@ -21,7 +21,7 @@ executors:
         environment:
           BUNDLE_PATH: vendor/bundle
           RAILS_ENV: test
-          BUNDLE_VERSION: 2.1.4
+          BUNDLER_VERSION: 2.1.4
 jobs:
   test:
     executor: default
