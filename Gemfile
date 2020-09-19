@@ -35,8 +35,9 @@ gem 'fog',                     '1.36.0'
 
 gem 'counter_culture'
 
+gem 'mysql2', '>= 0.4.4'
+
 group :development, :test do
-  gem 'mysql2', '>= 0.4.4'
   gem 'rubocop'
   gem "rspec-rails"
   gem "factory_bot_rails"
@@ -61,10 +62,6 @@ group :test do
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
   gem 'database_cleaner'
-end
-
-group :production do
-  gem 'pg', '0.20.0'
 end
 
 gem 'devise'

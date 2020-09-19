@@ -287,7 +287,6 @@ GEM
     parallel (1.19.2)
     parser (2.7.1.4)
       ast (~> 2.4.1)
-    pg (0.20.0)
     popper_js (1.16.0)
     proc_to_ast (0.1.0)
       coderay
@@ -470,7 +469,6 @@ DEPENDENCIES
   listen (~> 3.2)
   mini_magick (= 4.9.4)
   mysql2 (>= 0.4.4)
-  pg (= 0.20.0)
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.2)
   rspec-parameterized
