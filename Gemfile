@@ -36,7 +36,7 @@ gem 'fog',                     '1.36.0'
 gem 'counter_culture'
 
 group :development, :test do
-  gem 'sqlite3', '~> 1.4'
+  gem 'mysql2', '>= 0.4.4'
   gem 'rubocop'
   gem "rspec-rails"
   gem "factory_bot_rails"
