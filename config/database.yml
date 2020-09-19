@@ -9,8 +9,8 @@ default: &default
   encoding: utf8
   pool: 5
   username: root
-  password: root
-  host: localhost
+  password:
+  host: 127.0.0.1
 
 development:
   <<: *default
@@ -25,7 +25,4 @@ test:
 
 production:
   <<: *default
-  adapter: postgresql
-  encoding: unicode
-  pool: 5
   database: blog
