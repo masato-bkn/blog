@@ -22,9 +22,10 @@ executors:
           BUNDLE_PATH: vendor/bundle
           RAILS_ENV: test
           BUNDLER_VERSION: 2.1.4
-          DB_HOST: 127.0.0.1
           DB_USERNAME: root
           DB_PASSWORD:
+          MYSQL_HOST: 127.0.0.1
+
       - image: circleci/mysql:5.6.47
 jobs:
   test:
