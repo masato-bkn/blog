@@ -35,7 +35,7 @@ gem 'fog',                     '1.36.0'
 
 gem 'counter_culture'
 
-gem 'mysql2', '>= 0.4.4'
+gem 'mysql2', '>= 0.5.3'
 
 group :development, :test do
   gem 'rubocop'
