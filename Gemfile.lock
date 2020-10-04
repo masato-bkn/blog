@@ -468,7 +468,7 @@ DEPENDENCIES
   jquery-rails
   listen (~> 3.2)
   mini_magick (= 4.9.4)
-  mysql2 (>= 0.4.4)
+  mysql2 (>= 0.5.3)
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.2)
   rspec-parameterized
